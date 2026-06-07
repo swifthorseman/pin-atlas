@@ -46,7 +46,7 @@ depends on it. (ADR-0003 engine; ADR-0007 clipped view.)
 - A basemap source is configured (free-tier or self-hosted; see ADR-0003 consequences).
 - Map controls (zoom) are present.
 
-### Story V1-E1-S3 — Clip initial view to the dataset
+### Story V1-E1-S3 — Clip initial view to the dataset ✅
 - Initial viewport is fitted to Switzerland's bounds.
 - The view does not open as a bare world map with no coverage.
 - Panning beyond the dataset is constrained or clearly bounded (maxBounds acceptable).
