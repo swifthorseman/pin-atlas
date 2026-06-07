@@ -60,7 +60,7 @@ the correct curated place, shown in a results list. No map interaction yet.
 
 **Depends on:** E1. (Spec §13 search; §15 data; ADR-0002 IDs.)
 
-### Story V1-E2-S1 — Define domain types
+### Story V1-E2-S1 — Define domain types ✅
 - `Place`, `CustomPin`, `Route`, `MapState` types exist per spec §11.
 - `Place.id` is a stable opaque string; `displayName`/`searchAliases` are separate from identity.
 - Cross-reference fields `geonames`/`wikidata` present and documented as non-identity.
