@@ -1,0 +1,50 @@
+# CI — Pin Atlas
+# Runs on every pull request, and on pushes to master.
+# Keep this minimal: type-check, lint, build. Tests join the list once they exist.
+
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [master]
+
+# Cancel an in-progress run if a newer commit is pushed to the same branch/PR.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      # 'npm ci' installs exactly from package-lock.json — reproducible, fails if
+      # lockfile and package.json disagree. Requires package-lock.json to be committed.
+      - name: Install dependencies
+        run: npm ci
+
+      # Type-check via project references. noEmit is set in tsconfig.app.json.
+      - name: Type-check
+        run: npx tsc -b
+
+      # Lint. The Vite react-ts template ships an eslint setup and a "lint" script.
+      - name: Lint
+        run: npm run lint
+
+      # Production build must succeed.
+      - name: Build
+        run: npm run build
+
+      # Tests: uncomment once a test runner and a "test" script exist (E7 / test-alongside).
+      # Use a non-watch invocation in CI.
+      # - name: Test
+      #   run: npm test -- --run
