@@ -36,12 +36,12 @@ Switzerland. No pins, no search yet.
 all come together here for the first time. Get it working before anything
 depends on it. (ADR-0003 engine; ADR-0007 clipped view.)
 
-### Story V1-E1-S1 — Scaffold the app
+### Story V1-E1-S1 — Scaffold the app ✅
 - Vite + React + TypeScript project runs locally with `npm run dev`.
 - Project structure follows spec §14 (`components/`, `domain/`, `services/`, `data/`, `tests/`).
 - Build produces no type errors.
 
-### Story V1-E1-S2 — Render a map
+### Story V1-E1-S2 — Render a map ✅
 - A MapLibre GL map renders full-page.
 - A basemap source is configured (free-tier or self-hosted; see ADR-0003 consequences).
 - Map controls (zoom) are present.
