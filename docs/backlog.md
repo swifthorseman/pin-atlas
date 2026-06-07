@@ -65,7 +65,7 @@ the correct curated place, shown in a results list. No map interaction yet.
 - `Place.id` is a stable opaque string; `displayName`/`searchAliases` are separate from identity.
 - Cross-reference fields `geonames`/`wikidata` present and documented as non-identity.
 
-### Story V1-E2-S2 — Curated Switzerland dataset
+### Story V1-E2-S2 — Curated Switzerland dataset ✅
 - A static JSON dataset of traveller-relevant Swiss places exists under `data/countries/ch/`.
 - Each place has a stable opaque ID following the ADR-0002 scheme (GeoNames-mirrored where possible; reserved range for minted IDs).
 - Each place has multilingual `displayName` and `searchAliases` covering the known naming variants.
