@@ -1,0 +1,202 @@
+[
+  {
+    "id": "ch:place:2661552",
+    "countryCode": "CH",
+    "lat": 46.94809,
+    "lng": 7.44744,
+    "displayName": { "de": "Bern", "en": "Bern", "fr": "Berne", "it": "Berna", "rm": "Berna" },
+    "searchAliases": ["Bern", "Berne", "Berna"],
+    "admin1": "BE",
+    "geonames": 2661552
+  },
+  {
+    "id": "ch:place:2657896",
+    "countryCode": "CH",
+    "lat": 47.36667,
+    "lng": 8.55,
+    "displayName": { "de": "Zürich", "en": "Zurich", "it": "Zurigo", "rm": "Turitg" },
+    "searchAliases": ["Zürich", "Zurich", "Zurigo", "Turitg"],
+    "admin1": "ZH",
+    "geonames": 2657896
+  },
+  {
+    "id": "ch:place:2660646",
+    "countryCode": "CH",
+    "lat": 46.20222,
+    "lng": 6.14569,
+    "displayName": { "en": "Geneva", "fr": "Genève", "de": "Genf", "it": "Ginevra", "rm": "Genevra" },
+    "searchAliases": ["Geneva", "Genève", "Geneve", "Genf", "Ginevra", "Genevra", "Ginebra"],
+    "admin1": "GE",
+    "geonames": 2660646
+  },
+  {
+    "id": "ch:place:2659994",
+    "countryCode": "CH",
+    "lat": 46.516,
+    "lng": 6.63282,
+    "displayName": { "fr": "Lausanne", "en": "Lausanne", "de": "Lausanne", "it": "Losanna" },
+    "searchAliases": ["Lausanne", "Losanna"],
+    "admin1": "VD",
+    "geonames": 2659994
+  },
+  {
+    "id": "ch:place:2659811",
+    "countryCode": "CH",
+    "lat": 47.05048,
+    "lng": 8.30635,
+    "displayName": { "de": "Luzern", "en": "Lucerne", "fr": "Lucerne", "it": "Lucerna", "rm": "Lucerna" },
+    "searchAliases": ["Luzern", "Lucerne", "Lucerna"],
+    "admin1": "LU",
+    "geonames": 2659811
+  },
+  {
+    "id": "ch:place:2659836",
+    "countryCode": "CH",
+    "lat": 46.01008,
+    "lng": 8.96004,
+    "displayName": { "it": "Lugano", "en": "Lugano", "de": "Lugano", "fr": "Lugano" },
+    "searchAliases": ["Lugano"],
+    "admin1": "TI",
+    "geonames": 2659836
+  },
+  {
+    "id": "ch:place:2660253",
+    "countryCode": "CH",
+    "lat": 46.6838,
+    "lng": 7.8663,
+    "displayName": { "de": "Interlaken", "en": "Interlaken" },
+    "searchAliases": ["Interlaken"],
+    "admin1": "BE",
+    "geonames": 2660253
+  },
+  {
+    "id": "ch:place:2657928",
+    "countryCode": "CH",
+    "lat": 46.01999,
+    "lng": 7.74863,
+    "displayName": { "de": "Zermatt", "en": "Zermatt" },
+    "searchAliases": ["Zermatt"],
+    "admin1": "VS",
+    "geonames": 2657928
+  },
+  {
+    "id": "ch:place:2660498",
+    "countryCode": "CH",
+    "lat": 46.62396,
+    "lng": 8.03601,
+    "displayName": { "de": "Grindelwald", "en": "Grindelwald" },
+    "searchAliases": ["Grindelwald", "Grindlewald"],
+    "admin1": "BE",
+    "geonames": 2660498
+  },
+  {
+    "id": "ch:place:2659992",
+    "countryCode": "CH",
+    "lat": 46.59308,
+    "lng": 7.90938,
+    "displayName": { "de": "Lauterbrunnen", "en": "Lauterbrunnen" },
+    "searchAliases": ["Lauterbrunnen"],
+    "admin1": "BE",
+    "geonames": 2659992
+  },
+  {
+    "id": "ch:place:2659530",
+    "countryCode": "CH",
+    "lat": 46.5588,
+    "lng": 7.8929,
+    "displayName": { "de": "Mürren", "en": "Mürren" },
+    "searchAliases": ["Mürren", "Murren", "Muerren"],
+    "admin1": "BE",
+    "geonames": 2659530
+  },
+  {
+    "id": "ch:place:2660611",
+    "countryCode": "CH",
+    "lat": 46.5455,
+    "lng": 7.89138,
+    "displayName": { "de": "Gimmelwald", "en": "Gimmelwald" },
+    "searchAliases": ["Gimmelwald"],
+    "admin1": "BE",
+    "geonames": 2660611
+  },
+  {
+    "id": "ch:place:2658020",
+    "countryCode": "CH",
+    "lat": 46.60599,
+    "lng": 7.92013,
+    "displayName": { "de": "Wengen", "en": "Wengen" },
+    "searchAliases": ["Wengen"],
+    "admin1": "BE",
+    "geonames": 2658020
+  },
+  {
+    "id": "ch:place:2659529",
+    "countryCode": "CH",
+    "lat": 46.92827,
+    "lng": 7.11715,
+    "displayName": { "de": "Murten", "fr": "Morat", "en": "Murten", "it": "Morat" },
+    "searchAliases": ["Murten", "Morat"],
+    "admin1": "FR",
+    "geonames": 2659529
+  },
+  {
+    "id": "ch:place:2658813",
+    "countryCode": "CH",
+    "lat": 46.49937,
+    "lng": 9.84327,
+    "displayName": { "de": "St. Moritz", "en": "St. Moritz", "fr": "Saint-Moritz", "it": "San Maurizio", "rm": "San Murezzan" },
+    "searchAliases": ["St. Moritz", "St Moritz", "Sankt Moritz", "Saint-Moritz", "San Murezzan", "San Maurizio"],
+    "admin1": "GR",
+    "geonames": 2658813
+  },
+  {
+    "id": "ch:place:2661039",
+    "countryCode": "CH",
+    "lat": 46.80429,
+    "lng": 9.83723,
+    "displayName": { "de": "Davos", "en": "Davos", "rm": "Tavau" },
+    "searchAliases": ["Davos", "Tavau"],
+    "admin1": "GR",
+    "geonames": 2661039
+  },
+  {
+    "id": "ch:place:2660145",
+    "countryCode": "CH",
+    "lat": 46.58528,
+    "lng": 7.96128,
+    "displayName": { "de": "Kleine Scheidegg", "en": "Kleine Scheidegg" },
+    "searchAliases": ["Kleine Scheidegg", "Kleine Scheideck"],
+    "admin1": "BE",
+    "geonames": 2660145
+  },
+  {
+    "id": "ch:place:6935302",
+    "countryCode": "CH",
+    "lat": 46.56406,
+    "lng": 7.8877,
+    "displayName": { "de": "Allmendhubel", "en": "Allmendhubel" },
+    "searchAliases": ["Allmendhubel", "Almenhubel"],
+    "admin1": "BE",
+    "geonames": 6935302
+  },
+  {
+    "id": "ch:place:6935774",
+    "countryCode": "CH",
+    "lat": 46.61817,
+    "lng": 7.93806,
+    "displayName": { "de": "Männlichen", "en": "Männlichen" },
+    "searchAliases": ["Männlichen", "Mannlichen", "Maennlichen"],
+    "admin1": "BE",
+    "geonames": 6935774
+  },
+  {
+    "id": "ch:place:6694230",
+    "countryCode": "CH",
+    "lat": 45.93842,
+    "lng": 7.72993,
+    "displayName": { "de": "Klein Matterhorn", "en": "Klein Matterhorn", "it": "Piccolo Cervino" },
+    "searchAliases": ["Klein Matterhorn", "Kleines Matterhorn", "Matterhorn Glacier Paradise", "Piccolo Cervino"],
+    "admin1": "VS",
+    "geonames": 6694230
+  }
+]
