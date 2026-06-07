@@ -1,3 +1,5 @@
+import MapView from '../components/map/MapView'
+
 export default function App() {
-  return <div id="app">Pin Atlas</div>
+  return <MapView />
 }
