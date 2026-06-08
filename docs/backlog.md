@@ -92,7 +92,7 @@ lists selected places; removing one removes its pin.
 - A pin renders at the place's coordinates.
 - Adding a place already selected does not create a duplicate.
 
-### Story V1-E3-S2 — Selected-places sidebar
+### Story V1-E3-S2 — Selected-places sidebar ✅
 - A sidebar lists currently selected places by display name.
 - Each entry has a remove control.
 - Removing an entry removes its pin from the map.

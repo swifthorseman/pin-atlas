@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { emptyMapState, addPlaceId } from './MapState'
+import { emptyMapState, addPlaceId, removePlaceId } from './MapState'
 
 describe('emptyMapState', () => {
   it('has no selected ids', () => {
@@ -42,5 +42,34 @@ describe('addPlaceId', () => {
     const state = emptyMapState()
     addPlaceId(state, 'ch:place:2657928')
     expect(state.placeIds).toEqual([])
+  })
+})
+
+describe('removePlaceId', () => {
+  it('removes a selected place id', () => {
+    const state = { ...emptyMapState(), placeIds: ['ch:place:2657928'] }
+    expect(removePlaceId(state, 'ch:place:2657928').placeIds).toEqual([])
+  })
+
+  it('is a no-op when the id is not selected', () => {
+    const state = { ...emptyMapState(), placeIds: ['ch:place:2657928'] }
+    expect(removePlaceId(state, 'ch:place:2660646').placeIds).toEqual(['ch:place:2657928'])
+  })
+
+  it('preserves the order of the remaining ids', () => {
+    const state = {
+      ...emptyMapState(),
+      placeIds: ['ch:place:2661552', 'ch:place:2657928', 'ch:place:2660646'],
+    }
+    expect(removePlaceId(state, 'ch:place:2657928').placeIds).toEqual([
+      'ch:place:2661552',
+      'ch:place:2660646',
+    ])
+  })
+
+  it('does not mutate the input state', () => {
+    const state = { ...emptyMapState(), placeIds: ['ch:place:2657928'] }
+    removePlaceId(state, 'ch:place:2657928')
+    expect(state.placeIds).toEqual(['ch:place:2657928'])
   })
 })
