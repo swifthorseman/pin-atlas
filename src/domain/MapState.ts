@@ -15,3 +15,8 @@ export function addPlaceId(state: MapState, id: string): MapState {
   if (state.placeIds.includes(id)) return state
   return { ...state, placeIds: [...state.placeIds, id] }
 }
+
+export function removePlaceId(state: MapState, id: string): MapState {
+  if (!state.placeIds.includes(id)) return state
+  return { ...state, placeIds: state.placeIds.filter((placeId) => placeId !== id) }
+}

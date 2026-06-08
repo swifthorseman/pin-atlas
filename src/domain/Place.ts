@@ -17,3 +17,7 @@ export interface Place {
   importance?: number
   type?: string
 }
+
+export function placeName(place: Place): string {
+  return place.displayName.en ?? Object.values(place.displayName)[0]
+}

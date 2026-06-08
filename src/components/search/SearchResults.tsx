@@ -1,4 +1,5 @@
 import type { Place } from '../../domain/Place'
+import { placeName } from '../../domain/Place'
 import { placeContext } from '../../services/search/placeContext'
 
 interface SearchResultsProps {
@@ -7,8 +8,7 @@ interface SearchResultsProps {
 }
 
 function label(place: Place): string {
-  const name = place.displayName.en ?? Object.values(place.displayName)[0]
-  return `${name} — ${placeContext(place)}`
+  return `${placeName(place)} — ${placeContext(place)}`
 }
 
 export default function SearchResults({ results, onSelect }: SearchResultsProps) {

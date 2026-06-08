@@ -2,7 +2,8 @@ import { useMemo, useState } from 'react'
 import MapView from '../components/map/MapView'
 import SearchBox from '../components/search/SearchBox'
 import SearchResults from '../components/search/SearchResults'
-import { emptyMapState, addPlaceId } from '../domain/MapState'
+import SelectedPlaces from '../components/sidebar/SelectedPlaces'
+import { emptyMapState, addPlaceId, removePlaceId } from '../domain/MapState'
 import { allPlaces, findPlace } from '../data/places'
 import { searchPlaces } from '../services/search/searchPlaces'
 import type { Place } from '../domain/Place'
@@ -25,6 +26,10 @@ export default function App() {
     setQuery('')
   }
 
+  function handleRemove(id: string) {
+    setMapState((state) => removePlaceId(state, id))
+  }
+
   return (
     <div style={{ position: 'relative', width: '100%', height: '100%' }}>
       <MapView places={selectedPlaces} />
@@ -43,6 +48,7 @@ export default function App() {
       >
         <SearchBox value={query} onChange={setQuery} />
         <SearchResults results={results} onSelect={handleSelect} />
+        <SelectedPlaces places={selectedPlaces} onRemove={handleRemove} />
       </div>
     </div>
   )
