@@ -44,7 +44,6 @@ jobs:
       - name: Build
         run: npm run build
 
-      # Tests: uncomment once a test runner and a "test" script exist (E7 / test-alongside).
-      # Use a non-watch invocation in CI.
-      # - name: Test
-      #   run: npm test -- --run
+      # Tests run non-watch in CI.
+      - name: Test
+        run: npm test -- --run

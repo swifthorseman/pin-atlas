@@ -71,7 +71,7 @@ the correct curated place, shown in a results list. No map interaction yet.
 - Each place has multilingual `displayName` and `searchAliases` covering the known naming variants.
 - Dataset files are committed source data (never git-ignored).
 
-### Story V1-E2-S3 — Search resolves names to IDs
+### Story V1-E2-S3 — Search resolves names to IDs ✅
 - Exact-name match works (`Bern`, `Interlaken`, `Zermatt`, `Gimmelwald`).
 - Alias and accent-insensitive match works (`Murren`→`Mürren`; `Almenhubel`→`Allmendhubel`).
 - Multi-name places resolve to one ID (`Luzern`/`Lucerne`; `Murten`/`Morat`; `Geneva`/`Genève`/`Genf`/`Ginevra`).
