@@ -87,7 +87,7 @@ lists selected places; removing one removes its pin.
 
 **Depends on:** E1, E2. (Spec §17 pin behaviour.)
 
-### Story V1-E3-S1 — Add a place as a pin
+### Story V1-E3-S1 — Add a place as a pin ✅
 - Selecting a search result adds the place to selected state.
 - A pin renders at the place's coordinates.
 - Adding a place already selected does not create a duplicate.
