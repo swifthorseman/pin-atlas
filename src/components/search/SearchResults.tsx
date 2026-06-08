@@ -1,14 +1,9 @@
 import type { Place } from '../../domain/Place'
-import { placeName } from '../../domain/Place'
-import { placeContext } from '../../services/search/placeContext'
+import { placeLabel } from '../../services/search/placeLabel'
 
 interface SearchResultsProps {
   results: Place[]
   onSelect: (place: Place) => void
-}
-
-function label(place: Place): string {
-  return `${placeName(place)} — ${placeContext(place)}`
 }
 
 export default function SearchResults({ results, onSelect }: SearchResultsProps) {
@@ -23,7 +18,7 @@ export default function SearchResults({ results, onSelect }: SearchResultsProps)
             onClick={() => onSelect(place)}
             style={{ width: '100%', textAlign: 'left', padding: '8px', cursor: 'pointer' }}
           >
-            {label(place)}
+            {placeLabel(place)}
           </button>
         </li>
       ))}

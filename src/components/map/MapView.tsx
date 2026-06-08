@@ -3,6 +3,7 @@ import maplibregl from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
 import { BASEMAP_STYLE, DATASET_BOUNDS, MAX_BOUNDS } from '../../config'
 import type { Place } from '../../domain/Place'
+import { placeLabel } from '../../services/search/placeLabel'
 
 interface MapViewProps {
   places: Place[]
@@ -37,9 +38,13 @@ export default function MapView({ places }: MapViewProps) {
     if (!map) return
 
     markersRef.current.forEach((marker) => marker.remove())
-    markersRef.current = places.map((place) =>
-      new maplibregl.Marker().setLngLat([place.lng, place.lat]).addTo(map),
-    )
+    markersRef.current = places.map((place) => {
+      const popup = new maplibregl.Popup({ offset: 25 }).setText(placeLabel(place))
+      return new maplibregl.Marker()
+        .setLngLat([place.lng, place.lat])
+        .setPopup(popup)
+        .addTo(map)
+    })
 
     return () => {
       markersRef.current.forEach((marker) => marker.remove())

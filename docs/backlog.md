@@ -97,7 +97,7 @@ lists selected places; removing one removes its pin.
 - Each entry has a remove control.
 - Removing an entry removes its pin from the map.
 
-### Story V1-E3-S3 — Pin interaction
+### Story V1-E3-S3 — Pin interaction ✅
 - Clicking a pin shows the place name and basic context.
 - (Clustering/labels by zoom may be deferred to V1.5; not required here.)
 
