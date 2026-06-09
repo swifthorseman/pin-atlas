@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import MapView from '../components/map/MapView'
 import SearchBox from '../components/search/SearchBox'
 import SearchResults from '../components/search/SearchResults'
@@ -6,6 +6,7 @@ import SelectedPlaces from '../components/sidebar/SelectedPlaces'
 import { emptyMapState, addPlaceId, removePlaceId } from '../domain/MapState'
 import { allPlaces, findPlace } from '../data/places'
 import { searchPlaces } from '../services/search/searchPlaces'
+import { serialiseMapState } from '../services/url-state/serialiseMapState'
 import type { Place } from '../domain/Place'
 
 export default function App() {
@@ -20,6 +21,12 @@ export default function App() {
         .filter((place): place is Place => place !== undefined),
     [mapState.placeIds],
   )
+
+  useEffect(() => {
+    const query = serialiseMapState(mapState)
+    const url = query ? `?${query}` : window.location.pathname
+    window.history.replaceState(null, '', url)
+  }, [mapState])
 
   function handleSelect(place: Place) {
     setMapState((state) => addPlaceId(state, place.id))

@@ -110,7 +110,7 @@ opening the URL in another tab/browser reconstructs the same map.
 
 **Depends on:** E3. (Spec §12 URL rules; ADR-0005 state source. This epic delivers the account-free shareable-URL property.)
 
-### Story V1-E4-S1 — Serialise state to the URL
+### Story V1-E4-S1 — Serialise state to the URL ✅
 - Selected place IDs are encoded as opaque IDs in the URL (e.g. `?places=ch:place:2660646,...`).
 - Display names/slugs are never used as state.
 - Ordering is deterministic; IDs are deduplicated.
