@@ -121,7 +121,7 @@ opening the URL in another tab/browser reconstructs the same map.
 - Unknown IDs are ignored gracefully (no crash, no error state).
 - Duplicate IDs in the URL are deduplicated.
 
-### Story V1-E4-S3 — State-source boundary
+### Story V1-E4-S3 — State-source boundary ✅
 - URL parsing produces a `MapState`; the app consumes `MapState` without knowing its origin.
 - URL-parsing logic is isolated (not leaked into components), so a future stored-map/short-link source can be added without touching the data model or UI. (ADR-0005.)
 
