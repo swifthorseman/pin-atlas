@@ -116,7 +116,7 @@ opening the URL in another tab/browser reconstructs the same map.
 - Ordering is deterministic; IDs are deduplicated.
 - The URL updates when pins are added or removed.
 
-### Story V1-E4-S2 — Reconstruct state from the URL
+### Story V1-E4-S2 — Reconstruct state from the URL ✅
 - Loading a URL restores exactly the encoded pins.
 - Unknown IDs are ignored gracefully (no crash, no error state).
 - Duplicate IDs in the URL are deduplicated.
