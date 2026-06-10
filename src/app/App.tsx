@@ -3,14 +3,17 @@ import MapView from '../components/map/MapView'
 import SearchBox from '../components/search/SearchBox'
 import SearchResults from '../components/search/SearchResults'
 import SelectedPlaces from '../components/sidebar/SelectedPlaces'
-import { emptyMapState, addPlaceId, removePlaceId } from '../domain/MapState'
+import { addPlaceId, removePlaceId } from '../domain/MapState'
 import { allPlaces, findPlace } from '../data/places'
 import { searchPlaces } from '../services/search/searchPlaces'
 import { serialiseMapState } from '../services/url-state/serialiseMapState'
+import { parseMapState } from '../services/url-state/parseMapState'
 import type { Place } from '../domain/Place'
 
 export default function App() {
-  const [mapState, setMapState] = useState(emptyMapState)
+  const [mapState, setMapState] = useState(() =>
+    parseMapState(window.location.search, (id) => findPlace(id) !== undefined),
+  )
   const [query, setQuery] = useState('')
 
   const results = useMemo(() => searchPlaces(query, allPlaces), [query])
