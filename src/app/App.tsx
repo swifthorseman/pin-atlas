@@ -6,14 +6,11 @@ import SelectedPlaces from '../components/sidebar/SelectedPlaces'
 import { addPlaceId, removePlaceId } from '../domain/MapState'
 import { allPlaces, findPlace } from '../data/places'
 import { searchPlaces } from '../services/search/searchPlaces'
-import { serialiseMapState } from '../services/url-state/serialiseMapState'
-import { parseMapState } from '../services/url-state/parseMapState'
+import { readInitialMapState, writeMapState } from '../services/url-state/urlStateSource'
 import type { Place } from '../domain/Place'
 
 export default function App() {
-  const [mapState, setMapState] = useState(() =>
-    parseMapState(window.location.search, (id) => findPlace(id) !== undefined),
-  )
+  const [mapState, setMapState] = useState(readInitialMapState)
   const [query, setQuery] = useState('')
 
   const results = useMemo(() => searchPlaces(query, allPlaces), [query])
@@ -26,9 +23,7 @@ export default function App() {
   )
 
   useEffect(() => {
-    const query = serialiseMapState(mapState)
-    const url = query ? `?${query}` : window.location.pathname
-    window.history.replaceState(null, '', url)
+    writeMapState(mapState)
   }, [mapState])
 
   function handleSelect(place: Place) {
