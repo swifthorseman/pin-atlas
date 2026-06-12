@@ -12,3 +12,9 @@ export function writeMapState(state: MapState): void {
   const url = query ? `?${query}` : window.location.pathname
   window.history.replaceState(null, '', url)
 }
+
+export function shareableUrl(state: MapState): string {
+  const query = serialiseMapState(state)
+  const { origin, pathname } = window.location
+  return query ? `${origin}${pathname}?${query}` : `${origin}${pathname}`
+}

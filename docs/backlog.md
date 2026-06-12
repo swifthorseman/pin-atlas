@@ -134,7 +134,7 @@ selected pins, all from the UI.
 
 **Depends on:** E3, E4. (Spec §17 controls.)
 
-### Story V1-E5-S1 — Copy / share URL
+### Story V1-E5-S1 — Copy / share URL ✅
 - A control copies the current shareable URL to the clipboard.
 - The copied URL reconstructs the current map when opened.
 
