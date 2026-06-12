@@ -3,6 +3,7 @@ import MapView from '../components/map/MapView'
 import SearchBox from '../components/search/SearchBox'
 import SearchResults from '../components/search/SearchResults'
 import SelectedPlaces from '../components/sidebar/SelectedPlaces'
+import CopyUrlButton from '../components/controls/CopyUrlButton'
 import { addPlaceId, removePlaceId } from '../domain/MapState'
 import { allPlaces, findPlace } from '../data/places'
 import { searchPlaces } from '../services/search/searchPlaces'
@@ -54,6 +55,7 @@ export default function App() {
         <SearchBox value={query} onChange={setQuery} />
         <SearchResults results={results} onSelect={handleSelect} />
         <SelectedPlaces places={selectedPlaces} onRemove={handleRemove} />
+        <CopyUrlButton />
       </div>
     </div>
   )

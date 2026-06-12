@@ -12,3 +12,7 @@ export function writeMapState(state: MapState): void {
   const url = query ? `?${query}` : window.location.pathname
   window.history.replaceState(null, '', url)
 }
+
+export function currentShareableUrl(): string {
+  return window.location.href
+}

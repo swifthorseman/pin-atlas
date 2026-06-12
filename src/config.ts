@@ -15,3 +15,5 @@ export const MAX_BOUNDS: LngLatBoundsLike = [
 export const COUNTRY_NAMES: Record<string, string> = {
   CH: 'Switzerland',
 }
+
+export const COPY_FEEDBACK_MS = 1500
