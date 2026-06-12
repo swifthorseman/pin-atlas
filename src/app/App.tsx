@@ -55,7 +55,7 @@ export default function App() {
         <SearchBox value={query} onChange={setQuery} />
         <SearchResults results={results} onSelect={handleSelect} />
         <SelectedPlaces places={selectedPlaces} onRemove={handleRemove} />
-        <CopyUrlButton />
+        <CopyUrlButton mapState={mapState} />
       </div>
     </div>
   )

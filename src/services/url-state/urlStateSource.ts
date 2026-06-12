@@ -13,6 +13,8 @@ export function writeMapState(state: MapState): void {
   window.history.replaceState(null, '', url)
 }
 
-export function currentShareableUrl(): string {
-  return window.location.href
+export function shareableUrl(state: MapState): string {
+  const query = serialiseMapState(state)
+  const { origin, pathname } = window.location
+  return query ? `${origin}${pathname}?${query}` : `${origin}${pathname}`
 }

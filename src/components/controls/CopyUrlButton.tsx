@@ -1,8 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
-import { currentShareableUrl } from '../../services/url-state/urlStateSource'
+import { shareableUrl } from '../../services/url-state/urlStateSource'
 import { COPY_FEEDBACK_MS } from '../../config'
+import type { MapState } from '../../domain/MapState'
 
-export default function CopyUrlButton() {
+interface CopyUrlButtonProps {
+  mapState: MapState
+}
+
+export default function CopyUrlButton({ mapState }: CopyUrlButtonProps) {
   const [copied, setCopied] = useState(false)
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
@@ -13,7 +18,7 @@ export default function CopyUrlButton() {
   }, [])
 
   async function handleCopy() {
-    await navigator.clipboard.writeText(currentShareableUrl())
+    await navigator.clipboard.writeText(shareableUrl(mapState))
     setCopied(true)
     if (timeoutRef.current !== null) clearTimeout(timeoutRef.current)
     timeoutRef.current = setTimeout(() => setCopied(false), COPY_FEEDBACK_MS)
