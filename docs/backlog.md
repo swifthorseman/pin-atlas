@@ -138,7 +138,7 @@ selected pins, all from the UI.
 - A control copies the current shareable URL to the clipboard.
 - The copied URL reconstructs the current map when opened.
 
-### Story V1-E5-S2 — Clear all
+### Story V1-E5-S2 — Clear all ✅
 - A control removes all selected places.
 - The URL and map update to the empty state.
 

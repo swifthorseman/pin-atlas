@@ -4,7 +4,8 @@ import SearchBox from '../components/search/SearchBox'
 import SearchResults from '../components/search/SearchResults'
 import SelectedPlaces from '../components/sidebar/SelectedPlaces'
 import CopyUrlButton from '../components/controls/CopyUrlButton'
-import { addPlaceId, removePlaceId } from '../domain/MapState'
+import ClearAllButton from '../components/controls/ClearAllButton'
+import { emptyMapState, addPlaceId, removePlaceId } from '../domain/MapState'
 import { allPlaces, findPlace } from '../data/places'
 import { searchPlaces } from '../services/search/searchPlaces'
 import { readInitialMapState, writeMapState } from '../services/url-state/urlStateSource'
@@ -36,6 +37,10 @@ export default function App() {
     setMapState((state) => removePlaceId(state, id))
   }
 
+  function handleClear() {
+    setMapState(emptyMapState())
+  }
+
   return (
     <div style={{ position: 'relative', width: '100%', height: '100%' }}>
       <MapView places={selectedPlaces} />
@@ -56,6 +61,7 @@ export default function App() {
         <SearchResults results={results} onSelect={handleSelect} />
         <SelectedPlaces places={selectedPlaces} onRemove={handleRemove} />
         <CopyUrlButton mapState={mapState} />
+        <ClearAllButton onClear={handleClear} disabled={mapState.placeIds.length === 0} />
       </div>
     </div>
   )
