@@ -427,6 +427,7 @@ Important cases:
 - **Vite** as build tool
 - `URLSearchParams` for URL state
 - Static JSON datasets for the initial MVP
+- Hosted vector basemap (MapTiler), referenced by style URL with a domain-restricted client-side key in `src/config.ts`. See ADR-0009.
 
 No backend in V1. See §18 and ADR-0005.
 
@@ -486,7 +487,7 @@ Progression: V1 uses `countryCode` metadata; V1.5 uses `admin1` for Swiss canton
 ## 17. Map UX
 
 ### Initial View
-The default product opens clipped to the available dataset's bounds (Switzerland initially), not as an empty world map with no coverage elsewhere. This is clearer than inviting the user to pan into empty regions. See ADR-0007. If selected pins exist, the map can fit to selected data.
+The default product opens clipped to the available dataset's bounds (Switzerland initially), not as an empty world map with no coverage elsewhere. This is clearer than inviting the user to pan into empty regions. See ADR-0007. If selected pins exist, the map can fit to selected data. The basemap tiles are served by a hosted vector provider (MapTiler); see ADR-0009.
 
 ### Controls
 V1: search bar, selected-places list, remove selected place, copy/share URL, clear all, fit to selected.
@@ -597,3 +598,4 @@ All previously open questions are now settled. Rationale for the hard-to-reverse
 9. **Dense histories** → clustering at low zoom; revisit at scale. (§17)
 10. **Routes crossing borders** → mark all crossed countries as represented (`countryCodes` is plural). (§11, §16)
 11. **Canonical ID source** → internal IDs, GeoNames-mirrored where possible, Wikidata as optional cross-reference. (ADR-0002)
+12. **Basemap provider** → MapTiler free tier for V1, with a documented upgrade path (paid tier if commercial; self-hosted Protomaps only if traffic economics demand). (ADR-0009)
