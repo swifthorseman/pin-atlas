@@ -142,7 +142,7 @@ selected pins, all from the UI.
 - A control removes all selected places.
 - The URL and map update to the empty state.
 
-### Story V1-E5-S3 — Fit to selected
+### Story V1-E5-S3 — Fit to selected ✅
 - A control adjusts map bounds to fit all selected pins.
 - With no pins selected, the control is disabled or no-ops gracefully.
 
