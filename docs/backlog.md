@@ -183,7 +183,7 @@ the pins. Tests cover URL state, search aliases, and derived coverage (see below
 as a trailing epic. Listed separately so the coverage is not forgotten.
 (Spec §19.)
 
-### Story V1-E7-S1 — URL state tests
+### Story V1-E7-S1 — URL state tests ✅
 - Empty URL → empty state.
 - Valid IDs parse correctly.
 - Duplicates deduplicated.
