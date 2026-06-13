@@ -191,7 +191,7 @@ as a trailing epic. Listed separately so the coverage is not forgotten.
 - Add/remove updates URL.
 - Serialisation deterministic.
 
-### Story V1-E7-S2 — Search tests
+### Story V1-E7-S2 — Search tests ✅
 - The resolution cases listed in V1-E2-S3 are covered.
 - Alias and accent-insensitive cases tested.
 - Same-ID cases tested (multi-name places resolve to one ID).
