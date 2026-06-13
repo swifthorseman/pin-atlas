@@ -196,12 +196,11 @@ as a trailing epic. Listed separately so the coverage is not forgotten.
 - Alias and accent-insensitive cases tested.
 - Same-ID cases tested (multi-name places resolve to one ID).
 
-### Story V1-E7-S3 — Coverage tests
+### Story V1-E7-S3 — Coverage tests ✅
 - Pin in Switzerland → Switzerland represented.
-- Pin in Zermatt → Valais.
-- Pin in Mürren → Bern.
 - Duplicates do not double-count.
 - Coverage stays derived.
+- (Canton cases — Zermatt → Valais, Mürren → Bern — moved to V1.5-E1; canton derivation is V1.5.)
 
 ---
 
@@ -211,6 +210,7 @@ Adds visible coverage at low zoom without changing the input model. Still
 metadata-based (ADR-0004). Stories to be detailed when V1 lands.
 
 - **V1.5-E1 — Canton derivation:** derive Swiss cantons from selected places via `admin1`.
+  Tests (deferred here from V1-E7-S3): pin in Zermatt → Valais; pin in Mürren → Bern.
 - **V1.5-E2 — Coverage summary UI:** "N countries represented", "X/26 cantons represented".
 - **V1.5-E3 — Country colouring at low zoom:** colour visited countries when zoomed out (needs the CH outline already required for cantons; no worldwide boundary set — ADR-0007).
 - **V1.5-E4 — Zoom-dependent rendering:** pins prominent when zoomed in, coverage prominent when zoomed out; clustering for density.
