@@ -204,6 +204,19 @@ as a trailing epic. Listed separately so the coverage is not forgotten.
 
 ---
 
+## V1 refinement — Alias language policy ✅
+
+Curated aliases restricted to the country's official Latin-script languages
+plus English; non-Latin native scripts and broader exonyms are a separate,
+deliberate feature. (ADR-0008.)
+
+- ADR-0008 records the decision and supersedes the spec §10 best-effort-exonym stance.
+- `spec.md` §10 amended (and the §13/§19 exonym references); best-effort-exonym allowance removed.
+- Curated dataset audited; `Ginebra` removed from Geneva (the lone non-official-language alias).
+- Search guard: `Ginebra` no longer resolves to Geneva.
+
+---
+
 # V1.5 — Derived Coverage Views (epic headers)
 
 Adds visible coverage at low zoom without changing the input model. Still
