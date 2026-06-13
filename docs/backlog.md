@@ -155,7 +155,7 @@ which canton) they fall in. Output may be a text readout — colouring is V1.5.
 
 **Depends on:** E3. (Spec §16 coverage; ADR-0001 derived; ADR-0004 metadata mechanism.)
 
-### Story V1-E6-S1 — Derive country from selected places
+### Story V1-E6-S1 — Derive country from selected places ✅
 - Each selected place maps to its `countryCode` (metadata mechanism, ADR-0004).
 - Country coverage is computed from selected places, not manually selected.
 - Multiple pins in one country do not duplicate the country in coverage.
