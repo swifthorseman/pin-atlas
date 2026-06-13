@@ -265,11 +265,10 @@ spec §17 Map UX.)
 **Goal / demo:** the built app loads at a public URL, with the SPA served
 correctly (deep links / refresh do not 404).
 
-**Depends on:** the hosting ADR (to be written; the host is not yet decided).
+**Depends on:** ADR-0010 (hosting: Cloudflare Pages, accepted).
 (spec §14 frontend; §18 backend, none in V1.)
 
-> **Blocked until the hosting ADR is accepted.** Do not implement E2 until the
-> host is chosen and recorded. E1 and E3-as-far-as-possible may proceed first.
+> Host decided: **Cloudflare Pages** (ADR-0010). E2 is unblocked.
 
 ### Story V1.1-E2-S1 — Build and deploy pipeline
 - The production build (`npm run build`) deploys to the chosen host on push to `master` (or a documented manual deploy command if CI deploy is deferred).

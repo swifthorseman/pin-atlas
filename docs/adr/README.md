@@ -13,6 +13,7 @@ These records capture the **rationale** behind hard-to-reverse technical decisio
 | [0007](0007-switzerland-clip-not-empty-world.md) | Initial view: clip to dataset, not an empty world map | Accepted |
 | [0008](0008-alias-languages-official-plus-english.md) | Curated alias languages: country official languages plus English | Accepted |
 | [0009](0009-basemap-provider-maptiler.md) | Basemap provider: MapTiler free tier, with a documented upgrade path | Accepted |
+| [0010](0010-hosting-cloudflare-pages.md) | Frontend hosting: Cloudflare Pages | Accepted |
 
 ### Template
 ```

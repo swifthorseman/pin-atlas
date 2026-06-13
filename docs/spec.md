@@ -503,7 +503,7 @@ Country/region colouring is a derived summary — visually secondary to pins whe
 
 ## 18. Backend Considerations
 
-No backend in V1. A backend becomes useful for: uploaded GPX storage, short links, user accounts, saved maps, trip libraries, photo attachments. Likely Node/TypeScript when introduced (single language across the stack), but that is an open decision deferred until V3. See ADR-0005.
+No backend in V1. The static V1 frontend is hosted on Cloudflare Pages (ADR-0010); the backend host is a separate decision deferred with the backend itself. A backend becomes useful for: uploaded GPX storage, short links, user accounts, saved maps, trip libraries, photo attachments. Likely Node/TypeScript when introduced (single language across the stack), but that, and where it runs (Cloudflare Workers, Railway, AWS, or elsewhere), is an open decision deferred until V3. See ADR-0005 and ADR-0010.
 
 ### Later Backend Entities (sketch)
 ```text
@@ -599,3 +599,4 @@ All previously open questions are now settled. Rationale for the hard-to-reverse
 10. **Routes crossing borders** → mark all crossed countries as represented (`countryCodes` is plural). (§11, §16)
 11. **Canonical ID source** → internal IDs, GeoNames-mirrored where possible, Wikidata as optional cross-reference. (ADR-0002)
 12. **Basemap provider** → MapTiler free tier for V1, with a documented upgrade path (paid tier if commercial; self-hosted Protomaps only if traffic economics demand). (ADR-0009)
+13. **Frontend hosting** → Cloudflare Pages for the static V1 frontend; the backend host is left as a separate, later decision. (ADR-0010)
