@@ -292,7 +292,7 @@ Presentation/search support; resolve user input to stable IDs:
 ```
 
 ### Language Support
-For Switzerland V1, officially support English, German, French, Italian, Romansh. Other exonyms are best-effort aliases (e.g. Spanish "Ginebra"), not guaranteed and not V1 defects if absent.
+Curated names are Latin-script only: the official languages of the place's country that use the Latin script, plus English (with accent- and punctuation-normalisation variants). For Switzerland: German, French, Italian, Romansh, and English. Where an official language uses a non-Latin script (Cyrillic, Han, Arabic, Thai, etc.), the native form is not carried, and the English or romanised name serves instead. Exonyms in non-official languages (e.g. Spanish "Ginebra" for Geneva) are not carried. Native non-Latin scripts and transliteration are a separate, deliberate feature. See ADR-0008.
 
 ### Swiss Naming Issues Stable IDs Solve
 Luzern/Lucerne, Murten/Morat, Genève/Geneva/Genf/Ginevra, Mürren/Murren, Männlichen/Mannlichen, Allmendhubel/Almenhubel.
@@ -414,7 +414,6 @@ Important cases:
 - `Luzern` / `Lucerne` → same place.
 - `Murten` / `Morat` → same place.
 - `Genève` / `Geneva` / `Genf` / `Ginevra` → same place.
-- `Ginebra` → only if added as best-effort alias.
 - `Grindlewald` → may suggest `Grindelwald` but must not be confused with `Gimmelwald`.
 
 ---
@@ -534,7 +533,7 @@ Trip           id, userId, name, placeIds, routeIds, uploadedRouteIds, dateFrom,
 - `Luzern` / `Lucerne` → same ID.
 - `Murten` / `Morat` → same ID.
 - `Geneva` / `Genève` / `Genf` / `Ginevra` → same ID.
-- `Ginebra` → optional.
+- `Ginebra` → no match (unsupported exonym, ADR-0008).
 
 ### Coverage
 - A pin in Switzerland marks Switzerland represented.

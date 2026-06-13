@@ -25,7 +25,7 @@
     "lat": 46.20222,
     "lng": 6.14569,
     "displayName": { "en": "Geneva", "fr": "Genève", "de": "Genf", "it": "Ginevra", "rm": "Genevra" },
-    "searchAliases": ["Geneva", "Genève", "Geneve", "Genf", "Ginevra", "Genevra", "Ginebra"],
+    "searchAliases": ["Geneva", "Genève", "Geneve", "Genf", "Ginevra", "Genevra"],
     "admin1": "GE",
     "geonames": 2660646
   },

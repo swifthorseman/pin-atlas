@@ -74,4 +74,10 @@ describe('searchPlaces', () => {
       expect(ids('Grindlewald')).not.toContain('ch:place:2660611')
     })
   })
+
+  describe('unsupported exonyms', () => {
+    it('does not resolve the Spanish exonym Ginebra to Geneva', () => {
+      expect(ids('Ginebra')).not.toContain('ch:place:2660646')
+    })
+  })
 })
