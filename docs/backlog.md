@@ -217,6 +217,113 @@ deliberate feature. (ADR-0008.)
 
 ---
 
+# V1.1 — Public Deployment
+
+Three epics. End state: a real public URL renders the app with a production
+basemap, served over a configured host with sensible response headers. This
+realises the product's core differentiator (a shareable URL, no account;
+spec §1), which is theoretical until the app is actually public.
+
+**Why before V1.5:** the shareable-URL property is the wedge; deploying makes it
+real, and the planned blog post needs a live link. Coverage views (V1.5) elaborate
+a product that should first exist in public.
+
+**Scope discipline (YAGNI):** this milestone makes the existing V1 app public and
+nothing more. No new product features. No speculative security hardening beyond
+what a public static SPA needs. No observability/analytics/e2e: those attach to
+features or a backend that do not yet exist and are deferred to later point
+releases.
+
+**Epic dependency order:** E1 (basemap) and E2 (hosting) are independent and may
+be done in either order. E3 (headers/CSP) depends on both, because the CSP must
+admit whatever the basemap provider fetches and is applied by the host.
+
+---
+
+## Epic V1.1-E1 — Production basemap
+
+**Goal / demo:** the map renders real, detailed basemap tiles (Swiss town and
+terrain detail at local zoom) from MapTiler instead of the MapLibre demo tiles.
+
+**Depends on:** nothing (operates on existing V1). (ADR-0009; ADR-0003 engine;
+spec §17 Map UX.)
+
+### Story V1.1-E1-S1 — Swap demo tiles for the MapTiler style
+- `BASEMAP_STYLE` in `src/config.ts` points at a MapTiler vector style URL, not `demotiles.maplibre.org`.
+- The MapTiler API key is read from a Vite environment variable (e.g. `VITE_MAPTILER_KEY`), not hardcoded in committed source.
+- `.env` files carrying the key are git-ignored; an `.env.example` documents the variable name with no real value.
+- The map renders at all zoom levels used by the app, including local zoom over Swiss towns (e.g. Mürren, Zermatt), showing real detail rather than coarse demo geometry.
+
+### Story V1.1-E1-S2 — Domain-restrict the key
+- The MapTiler key is restricted in the MapTiler dashboard to the deployment origin(s) plus localhost for dev. *(Dashboard action; verified manually, not a code change.)*
+- A short README note (or a comment by the env var in `.env.example`) records that the client-side key is public by design and must stay domain-restricted.
+
+---
+
+## Epic V1.1-E2 — Hosting
+
+**Goal / demo:** the built app loads at a public URL, with the SPA served
+correctly (deep links / refresh do not 404).
+
+**Depends on:** ADR-0010 (hosting: Cloudflare Pages, accepted).
+(spec §14 frontend; §18 backend, none in V1.)
+
+> Host decided: **Cloudflare Pages** (ADR-0010). E2 is unblocked.
+
+### Story V1.1-E2-S1 — Build and deploy pipeline
+- The production build (`npm run build`) deploys to the chosen host on push to `master` (or a documented manual deploy command if CI deploy is deferred).
+- The deployed site serves the Vite `dist/` output.
+- The deploy step does not run before CI's `verify` job passes (existing branch-protection discipline is preserved).
+
+### Story V1.1-E2-S2 — SPA serving and custom domain
+- Client-side routing / direct URL loads (e.g. a shared `?places=…` link opened cold) resolve to the app, not a host 404.
+- The site is reachable at the intended domain (`pinatlas.com` if wired now; otherwise the host's default subdomain, with the custom domain noted as a follow-up).
+
+---
+
+## Epic V1.1-E3 — Response headers
+
+**Goal / demo:** the public site loads with no console/CSP violations and carries
+a minimal, correct set of security headers.
+
+**Depends on:** E1 and E2. (The CSP must admit the basemap provider's fetches and
+is applied at the host layer.)
+
+**Scope (YAGNI):** a Content-Security-Policy that allows exactly what the app
+needs (self, plus MapTiler's tile/style/font/worker origins), and two low-cost
+hardening headers. Nothing speculative.
+
+### Story V1.1-E3-S1 — Content-Security-Policy
+- A CSP is served (via the host's headers config) that allows the app's own assets and MapTiler's required origins for styles, tiles, fonts, and web workers.
+- The map renders fully under the CSP with no CSP violations in the browser console.
+- The policy does not use `unsafe-eval`; any worker/blob needs of MapLibre are met with the narrowest directives that work.
+
+### Story V1.1-E3-S2 — Baseline hardening headers
+- `X-Content-Type-Options: nosniff` and `Referrer-Policy: strict-origin-when-cross-origin` are served.
+- Headers are verified present on the deployed site (documented check, e.g. response inspection).
+
+---
+
+## V1.1 Definition of Done
+
+The existing V1 app is reachable at a public URL, rendering production MapTiler
+tiles with real local-zoom detail; a cold-loaded shared link reconstructs its
+map; and the site serves a working CSP (no violations) plus baseline hardening
+headers. No product behaviour has changed. This milestone only makes V1 public.
+
+---
+
+## Deferred to later point releases (explicitly NOT in V1.1)
+
+- **Coverage threshold gate** (per-directory vitest thresholds, glue excluded):
+  CI hygiene, independent of deployment; own point release.
+- **e2e / Playwright smoke test**: earns its place once flows exist only in the
+  assembled UI; defer until there is a live URL worth smoke-testing and a reason.
+- **Observability / error tracking (Sentry), analytics beyond host-provided**:
+  attach to a backend or real traffic that do not yet exist.
+
+---
+
 # V1.5 — Derived Coverage Views (epic headers)
 
 Adds visible coverage at low zoom without changing the input model. Still
