@@ -160,7 +160,7 @@ which canton) they fall in. Output may be a text readout — colouring is V1.5.
 - Country coverage is computed from selected places, not manually selected.
 - Multiple pins in one country do not duplicate the country in coverage.
 
-### Story V1-E6-S2 — Surface coverage internally
+### Story V1-E6-S2 — Surface coverage internally ✅
 - Derived coverage is exposed (readout, console, or simple list) — full map colouring is explicitly out of scope for V1.
 - Coverage recomputes when pins change.
 

@@ -4,6 +4,7 @@ import type { MapViewHandle } from '../components/map/MapView'
 import SearchBox from '../components/search/SearchBox'
 import SearchResults from '../components/search/SearchResults'
 import SelectedPlaces from '../components/sidebar/SelectedPlaces'
+import CoverageReadout from '../components/coverage/CoverageReadout'
 import CopyUrlButton from '../components/controls/CopyUrlButton'
 import ClearAllButton from '../components/controls/ClearAllButton'
 import FitToSelectedButton from '../components/controls/FitToSelectedButton'
@@ -11,6 +12,7 @@ import { emptyMapState, addPlaceId, removePlaceId } from '../domain/MapState'
 import { allPlaces, findPlace } from '../data/places'
 import { searchPlaces } from '../services/search/searchPlaces'
 import { readInitialMapState, writeMapState } from '../services/url-state/urlStateSource'
+import { deriveCountries } from '../services/coverage/deriveCountries'
 import type { Place } from '../domain/Place'
 
 export default function App() {
@@ -26,6 +28,7 @@ export default function App() {
         .filter((place): place is Place => place !== undefined),
     [mapState.placeIds],
   )
+  const countries = useMemo(() => deriveCountries(selectedPlaces), [selectedPlaces])
 
   useEffect(() => {
     writeMapState(mapState)
@@ -63,6 +66,7 @@ export default function App() {
         <SearchBox value={query} onChange={setQuery} />
         <SearchResults results={results} onSelect={handleSelect} />
         <SelectedPlaces places={selectedPlaces} onRemove={handleRemove} />
+        <CoverageReadout countries={countries} />
         <CopyUrlButton mapState={mapState} />
         <ClearAllButton onClear={handleClear} disabled={mapState.placeIds.length === 0} />
         <FitToSelectedButton
