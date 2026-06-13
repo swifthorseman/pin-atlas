@@ -1,10 +1,12 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import MapView from '../components/map/MapView'
+import type { MapViewHandle } from '../components/map/MapView'
 import SearchBox from '../components/search/SearchBox'
 import SearchResults from '../components/search/SearchResults'
 import SelectedPlaces from '../components/sidebar/SelectedPlaces'
 import CopyUrlButton from '../components/controls/CopyUrlButton'
 import ClearAllButton from '../components/controls/ClearAllButton'
+import FitToSelectedButton from '../components/controls/FitToSelectedButton'
 import { emptyMapState, addPlaceId, removePlaceId } from '../domain/MapState'
 import { allPlaces, findPlace } from '../data/places'
 import { searchPlaces } from '../services/search/searchPlaces'
@@ -14,6 +16,7 @@ import type { Place } from '../domain/Place'
 export default function App() {
   const [mapState, setMapState] = useState(readInitialMapState)
   const [query, setQuery] = useState('')
+  const mapViewRef = useRef<MapViewHandle>(null)
 
   const results = useMemo(() => searchPlaces(query, allPlaces), [query])
   const selectedPlaces = useMemo(
@@ -43,7 +46,7 @@ export default function App() {
 
   return (
     <div style={{ position: 'relative', width: '100%', height: '100%' }}>
-      <MapView places={selectedPlaces} />
+      <MapView ref={mapViewRef} places={selectedPlaces} />
       <div
         style={{
           position: 'absolute',
@@ -62,6 +65,10 @@ export default function App() {
         <SelectedPlaces places={selectedPlaces} onRemove={handleRemove} />
         <CopyUrlButton mapState={mapState} />
         <ClearAllButton onClear={handleClear} disabled={mapState.placeIds.length === 0} />
+        <FitToSelectedButton
+          onFit={() => mapViewRef.current?.fitToSelected()}
+          disabled={mapState.placeIds.length === 0}
+        />
       </div>
     </div>
   )

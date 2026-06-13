@@ -17,3 +17,6 @@ export const COUNTRY_NAMES: Record<string, string> = {
 }
 
 export const COPY_FEEDBACK_MS = 1500
+
+export const FIT_PADDING = 40
+export const FIT_MAX_ZOOM = 12

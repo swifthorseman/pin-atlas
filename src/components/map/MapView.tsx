@@ -1,15 +1,28 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useImperativeHandle, useRef } from 'react'
+import type { Ref } from 'react'
 import maplibregl from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
-import { BASEMAP_STYLE, DATASET_BOUNDS, MAX_BOUNDS } from '../../config'
+import {
+  BASEMAP_STYLE,
+  DATASET_BOUNDS,
+  MAX_BOUNDS,
+  FIT_PADDING,
+  FIT_MAX_ZOOM,
+} from '../../config'
 import type { Place } from '../../domain/Place'
 import { placeLabel } from '../../services/search/placeLabel'
+import { placesBounds } from '../../services/map/placesBounds'
+
+export interface MapViewHandle {
+  fitToSelected: () => void
+}
 
 interface MapViewProps {
   places: Place[]
+  ref?: Ref<MapViewHandle>
 }
 
-export default function MapView({ places }: MapViewProps) {
+export default function MapView({ places, ref }: MapViewProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const mapRef = useRef<maplibregl.Map | null>(null)
   const markersRef = useRef<maplibregl.Marker[]>([])
@@ -51,6 +64,19 @@ export default function MapView({ places }: MapViewProps) {
       markersRef.current = []
     }
   }, [places])
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      fitToSelected() {
+        const map = mapRef.current
+        const bounds = placesBounds(places)
+        if (!map || !bounds) return
+        map.fitBounds(bounds, { padding: FIT_PADDING, maxZoom: FIT_MAX_ZOOM })
+      },
+    }),
+    [places],
+  )
 
   return <div ref={containerRef} style={{ width: '100%', height: '100%' }} />
 }
