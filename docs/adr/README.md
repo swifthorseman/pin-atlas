@@ -1,9 +1,13 @@
 # Architecture Decision Records
 
-These records capture the **rationale** behind hard-to-reverse technical decisions for Pin Atlas. Each ADR is **append-only and immutable**: when a decision changes, write a new ADR that supersedes the old one rather than editing it. The "what" of the product lives in `../spec.md`; the "why" lives here.
+These records capture the **rationale** behind hard-to-reverse technical
+decisions for Pin Atlas. Each ADR is **append-only and immutable**: when a
+decision changes, write a new ADR that supersedes the old one rather than
+editing it. The "what" of the product lives in `../spec.md`; the "why" lives
+here.
 
 | ADR | Title | Status |
-|-----|-------|--------|
+| ----- | ------- | -------- |
 | [0001](0001-pins-as-source-of-truth.md) | Pins and routes are the source of truth; coverage is derived | Accepted |
 | [0002](0002-canonical-id-scheme.md) | Canonical place IDs: internal, GeoNames-mirrored, Wikidata cross-ref | Accepted |
 | [0003](0003-map-engine-maplibre.md) | Map engine: MapLibre GL | Accepted |
@@ -15,8 +19,9 @@ These records capture the **rationale** behind hard-to-reverse technical decisio
 | [0009](0009-basemap-provider-maptiler.md) | Basemap provider: MapTiler free tier, with a documented upgrade path | Accepted |
 | [0010](0010-hosting-cloudflare-pages.md) | Frontend hosting: Cloudflare Pages | Accepted |
 
-### Template
-```
+## Template
+
+```markdown
 # ADR-NNNN: Title
 
 - Status: Proposed | Accepted | Superseded by ADR-XXXX

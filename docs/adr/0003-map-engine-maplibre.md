@@ -4,6 +4,7 @@
 - Date: 2026-06-06
 
 ## Context
+
 V1 only needs to drop pins on a map, for which the simplest tool would do. But
 the roadmap requires rendering derived coverage as filled, data-driven country
 and region polygons that update as pins change (V1.5), plus route lines, dense
@@ -11,10 +12,12 @@ clustering, and fit-to-bounds across many features (V2/V3). The engine is
 relatively hard to swap once the app is built around it.
 
 ## Decision
+
 Use **MapLibre GL** as the map engine, with **Vite** as the build tool and
 React + TypeScript as the app framework.
 
 ## Alternatives considered
+
 - **Leaflet.** Raster-tile, DOM-marker based; wonderfully simple for V1 pins and
   three-line raster basemaps. But data-driven polygon styling, large-scale
   clustering, and vector rendering are awkward bolt-ons that strain as data
@@ -26,6 +29,7 @@ React + TypeScript as the app framework.
   in V1; routing is a single page reading URL params. Unjustified. Rejected.
 
 ## Consequences
+
 - Slightly steeper V1 setup: MapLibre needs a vector tile/style source rather
   than pointing at raster OSM tiles.
 - Introduces a separate, deferred decision: the **basemap provider** (e.g. a

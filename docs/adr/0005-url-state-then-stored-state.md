@@ -4,6 +4,7 @@
 - Date: 2026-06-06
 
 ## Context
+
 The product's differentiator is a shareable, account-free map: the URL *is* the
 artifact. URL state is perfect for small, self-contained, anonymous snapshots,
 but query strings have practical length limits. Custom pins with free-text
@@ -12,6 +13,7 @@ length; dates, notes, and large geometry would too. We need URL state now
 without painting ourselves into a corner later.
 
 ## Decision
+
 V1 keeps all shareable state in the URL as opaque IDs (plus custom-pin
 coordinates/labels). The application consumes a `MapState` object via a
 **state-source boundary**: URL parsing produces a `MapState`, and the app
@@ -22,6 +24,7 @@ grow too long, introduce stored maps addressed by an opaque short-link ID
 boundary, just a different source.
 
 ## Alternatives considered
+
 - **Backend + accounts from V1.** Removes URL-length worry but destroys the
   account-free, instantly-shareable property that differentiates the product,
   and adds infrastructure the MVP does not need. Rejected.
@@ -32,6 +35,7 @@ boundary, just a different source.
   into state, fighting the opaque-ID discipline. Rejected.
 
 ## Consequences
+
 - One small discipline required in V1: keep URL-parsing logic out of components;
   isolate it behind the state-source boundary so additional sources (short link,
   user account) can be added without touching the data model or UI.
