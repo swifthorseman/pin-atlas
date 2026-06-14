@@ -6,22 +6,18 @@
 ## Context
 
 Curated places carry `displayName` and `searchAliases` in several languages so
-search can resolve a user's input whatever language they type. Spec §10
-supports
+search can resolve a user's input whatever language they type. Spec §10 supports
 the country's languages for the curated set (for Switzerland: English, German,
 French, Italian, Romansh) and additionally permits "best-effort" exonyms in
-other
-languages, naming Spanish "Ginebra" for Geneva as the example, declared
+other languages, naming Spanish "Ginebra" for Geneva as the example, declared
 non-guaranteed. In practice that leaves the alias set unbounded: once Spanish
 Ginebra is in, there is no principled reason to exclude Romanian, Portuguese, or
 Mandarin forms, and curation has no stopping rule. A second, related question
-the
-original wording left open is script: "official languages" taken literally would
-require native non-Latin forms (Cyrillic, Han, Arabic, Thai) for the countries
-that use them, which pulls in transliteration and input handling. The dataset
-currently holds exactly one stray exonym (`Ginebra`), an artifact of Geneva
-being
-the worked example during speccing.
+the original wording left open is script: "official languages" taken literally
+would require native non-Latin forms (Cyrillic, Han, Arabic, Thai) for the
+countries that use them, which pulls in transliteration and input handling. The
+dataset currently holds exactly one stray exonym (`Ginebra`), an artifact of
+Geneva being the worked example during speccing.
 
 ## Decision
 
@@ -29,9 +25,8 @@ Curated `displayName` and `searchAliases` are restricted to Latin-script names:
 the official languages of the place's country that are written in the Latin
 script, plus English. For Switzerland that is German, French, Italian, Romansh,
 and English. Accent- and punctuation-normalisation variants (for example
-"Murren"
-for "Mürren", or "St Moritz" for "St. Moritz") remain allowed, as a matching aid
-rather than a language.
+"Murren" for "Mürren", or "St Moritz" for "St. Moritz") remain allowed, as a
+matching aid rather than a language.
 
 Where an official language uses a non-Latin script (Cyrillic, Han, Arabic, Thai,
 and so on), its native form is not carried; the English or romanised name is the

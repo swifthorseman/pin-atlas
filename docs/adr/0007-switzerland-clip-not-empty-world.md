@@ -5,8 +5,8 @@
 
 ## Context
 
-V1 ships with only the Switzerland dataset, but the architecture is global.
-The initial map view could either render the full world (with data only in
+V1 ships with only the Switzerland dataset, but the architecture is global. The
+initial map view could either render the full world (with data only in
 Switzerland) or constrain the initial viewport to the covered region. The first
 is marginally easier; the second is clearer to the user.
 

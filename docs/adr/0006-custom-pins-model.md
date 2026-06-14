@@ -17,12 +17,10 @@ for someone either way.
 ## Decision
 
 Custom pins do **not** receive canonical IDs. A custom pin is a coordinate plus
-an optional free-text label. **Identity is the coordinate; the label is
-personal
+an optional free-text label. **Identity is the coordinate; the label is personal
 annotation, not identity.** Two custom pins at the same coordinate with
-different
-labels are the same point with different notes. Custom pins are carried in the
-URL as coordinates (and encoded labels), not via the ID scheme.
+different labels are the same point with different notes. Custom pins are
+carried in the URL as coordinates (and encoded labels), not via the ID scheme.
 
 The dividing line between curated and custom: a place earns a curated ID if it
 is durable and plausibly meaningful to many users as the *same* entity;
@@ -43,9 +41,8 @@ everything else is a custom pin.
   constituting it.
 - Label handling is load-bearing, not edge-case: real labels are proper nouns
   with spaces, accents, apostrophes, ampersands. Enforce a length cap,
-  URL-encode
-  labels, and ensure separator characters (`,` `;`) inside labels cannot break
-  parsing. Design this encoding correctly the first time.
+  URL-encode labels, and ensure separator characters (`,` `;`) inside labels
+  cannot break parsing. Design this encoding correctly the first time.
 - Custom pins carry no admin metadata, so determining their country/region
   requires the polygon mechanism (ADR-0004) — they drag in boundary geometry
   earlier than a curated-only plan would.
