@@ -384,12 +384,75 @@ headers. No product behaviour has changed. This milestone only makes V1 public.
 ### Deferred to later point releases (explicitly NOT in V1.1)
 
 - **Coverage threshold gate** (per-directory vitest thresholds, glue excluded):
-  CI hygiene, independent of deployment; own point release.
+  CI hygiene, independent of deployment; own point release (now V1.2).
 - **e2e / Playwright smoke test**: earns its place once flows exist only in the
   assembled UI; defer until there is a live URL worth smoke-testing and a
   reason.
 - **Observability / error tracking (Sentry), analytics beyond host-provided**:
   attach to a backend or real traffic that do not yet exist.
+
+---
+
+## V1.2 — Coverage gate (CI hardening)
+
+One epic. End state: CI fails when test coverage on the logic layer drops below
+a set threshold, so coverage regressions are caught automatically as the
+codebase grows.
+
+**Why a point release, sequenced after V1.1:** it is CI hygiene, independent of
+deployment and of any product feature; it does not block the public launch, but
+it is cheap and makes the repo demonstrably disciplined. Best done once the site
+is live (after V1.1) and before driving readers to the repo via the planned blog
+post.
+
+**Scope discipline (YAGNI / INVEST):** gate the layer where logic and bugs
+actually live (`domain/`, `services/`); do NOT gate map/UI glue, which is
+integration-shaped and cannot be meaningfully unit-tested in jsdom without
+hollow tests. Do not chase 100%. No e2e here (that is a separate, later
+decision).
+
+---
+
+### Epic V1.2-E1 — Coverage threshold in CI
+
+**Goal / demo:** a deliberate drop in logic-layer coverage makes CI fail; normal
+passing code is unaffected.
+
+**Depends on:** nothing (operates on the existing test suite and CI).
+Independent of V1.1; may be done any time after it.
+
+#### Story V1.2-E1-S1 — Configure coverage reporting
+
+- `vitest` is configured to collect coverage (the V8 or istanbul provider) via
+  `npm run test` (or a dedicated `test:coverage` script).
+- Coverage runs in the existing CI `verify` job (or a clearly-named adjacent
+  job), producing a coverage summary.
+- Map/UI glue is excluded from coverage measurement: `src/components/**`,
+  `src/app/**`, `src/main.tsx`, and `src/components/map/MapView.tsx` (anything
+  that requires a live map/DOM to exercise). The exclusion list lives in config
+  and is the documented record of "these need e2e, not unit tests."
+
+#### Story V1.2-E1-S2 — Enforce a logic-layer threshold
+
+- A coverage threshold is enforced on the non-excluded layer (`src/domain/**`,
+  `src/services/**`) such that CI fails below it.
+- The threshold is set at a level the current suite already meets (do not lower
+  the bar to pass; if current logic coverage is high, set it at or just below
+  the current figure, not 100%).
+- A deliberate removal of a logic-layer test (or addition of an untested logic
+  branch) causes CI to fail; reverting it makes CI pass. *(Demonstrates the gate
+  works.)*
+- Config values (threshold number, include/exclude globs) live in the vitest/CI
+  config, not hardcoded ad hoc.
+
+---
+
+### V1.2 Definition of Done
+
+CI enforces a coverage threshold on the logic layer (`domain/`, `services/`),
+with map/UI glue explicitly excluded; a coverage regression in logic fails the
+build, and the exclusion list documents what is intentionally left to future
+e2e. No product behaviour changes.
 
 ---
 
