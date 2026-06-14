@@ -260,7 +260,87 @@ feature. (ADR-0008.)
 
 ---
 
-## V1.1 — Public Deployment
+## V1.1 — End-to-end smoke tests
+
+One epic. End state: the core interactive flows of V1 are exercised by automated
+browser tests (Playwright), so the wiring across React + MapLibre + DOM is
+verified without manually clicking through the app, and regressions in those
+flows are caught automatically.
+
+**Why this exists:** unit tests cover the logic layer (URL state, search,
+coverage) but cannot verify the assembled UI: that clicking a search result
+drops a pin, that remove/clear actually update map and sidebar, that copy writes
+the right URL, that a cold-loaded share link reconstructs the map. Today that
+verification is manual (launch browser, click through everything), and the cost
+grows with every feature. This builds the safety net once.
+
+**Execution position:** built **before** the V1.2 deploy work and before testing
+V1 in anger, so tweaks discovered during real use are made under a regression
+net rather than re-verified by hand.
+
+**Scope discipline (YAGNI / INVEST):** assert only on **DOM-observable** state:
+MapLibre `Marker` DOM elements, sidebar entries, the URL, the clipboard. Do NOT
+assert on map-canvas pixels or basemap rendering (WebGL canvas is opaque to the
+test driver); do NOT assert that the map panned to specific bounds (needs
+map-instance hooks, out of scope). Five core flows only; not exhaustive
+coverage.
+
+---
+
+### Epic V1.1-E1 — Playwright smoke suite
+
+**Goal / demo:** `npx playwright test` drives a real browser through the core V1
+flows and passes; breaking a flow in app code makes it fail.
+
+**Depends on:** the existing V1 app. Independent of V1.2/V1.3.
+
+#### Story V1.1-E1-S1 — Playwright harness
+
+- Playwright is added as a dev dependency with a `playwright.config.ts` and a
+  test script (e.g. `npm run test:e2e`).
+- The config starts the app for tests via a `webServer` block (built preview,
+  e.g. `npm run preview`, to run against production-like output).
+- Headless Chromium is configured to obtain a WebGL context so MapLibre renders
+  (apply the known headless flag if required).
+- A trivial first test (app loads, map container present) passes, proving the
+  harness works end to end.
+
+#### Story V1.1-E1-S2 — Core interaction flows
+
+Each flow asserts only on DOM-observable state (markers, sidebar, URL,
+clipboard):
+
+- **Add a pin:** search a known place (e.g. "Zermatt"), click the result, assert
+  a marker element exists and the sidebar lists the place.
+- **Remove a pin:** with two places selected, remove one; assert its sidebar
+  entry and marker are gone and the other remains.
+- **Clear all:** with places selected, clear all; assert the sidebar is empty
+  and the URL has no `places` param.
+- **Copy URL:** with places selected, click copy; assert the clipboard contains
+  the expected `?places=…` URL. *(Grant clipboard permission in the Playwright
+  context.)*
+- **Reconstruct from URL:** load a cold URL containing `?places=…`; assert the
+  corresponding markers and sidebar entries appear.
+
+#### Story V1.1-E1-S3 — CI integration
+
+- A CI job installs the Chromium browser binary and runs the e2e suite.
+- The e2e job runs as part of, or alongside, the existing `verify` gate so a
+  broken core flow fails CI.
+- Browser install is cached where practical to keep CI time reasonable.
+
+---
+
+### V1.1 Definition of Done
+
+`npx playwright test` drives a real browser through the five core V1 flows (add,
+remove, clear, copy-URL, reconstruct-from-URL), asserting on DOM-observable
+state only; the suite runs in CI and fails when a core flow breaks. No product
+behaviour changes.
+
+---
+
+## V1.2 — Public Deployment
 
 Three epics. End state: a real public URL renders the app with a production
 basemap, served over a configured host with sensible response headers. This
@@ -273,9 +353,9 @@ elaborate a product that should first exist in public.
 
 **Scope discipline (YAGNI):** this milestone makes the existing V1 app public
 and nothing more. No new product features. No speculative security hardening
-beyond what a public static SPA needs. No observability/analytics/e2e: those
-attach to features or a backend that do not yet exist and are deferred to later
-point releases.
+beyond what a public static SPA needs. No observability/analytics: those attach
+to features or a backend that do not yet exist and are deferred to later point
+releases.
 
 **Epic dependency order:** E1 (basemap) and E2 (hosting) are independent and may
 be done in either order. E3 (headers/CSP) depends on both, because the CSP must
@@ -283,7 +363,7 @@ admit whatever the basemap provider fetches and is applied by the host.
 
 ---
 
-### Epic V1.1-E1 — Production basemap
+### Epic V1.2-E1 — Production basemap
 
 **Goal / demo:** the map renders real, detailed basemap tiles (Swiss town and
 terrain detail at local zoom) from MapTiler instead of the MapLibre demo tiles.
@@ -291,7 +371,7 @@ terrain detail at local zoom) from MapTiler instead of the MapLibre demo tiles.
 **Depends on:** nothing (operates on existing V1). (ADR-0009; ADR-0003 engine;
 spec §17 Map UX.)
 
-#### Story V1.1-E1-S1 — Swap demo tiles for the MapTiler style
+#### Story V1.2-E1-S1 — Swap demo tiles for the MapTiler style
 
 - `BASEMAP_STYLE` in `src/config.ts` points at a MapTiler vector style URL, not
   `demotiles.maplibre.org`.
@@ -303,7 +383,7 @@ spec §17 Map UX.)
   Swiss towns (e.g. Mürren, Zermatt), showing real detail rather than coarse
   demo geometry.
 
-#### Story V1.1-E1-S2 — Domain-restrict the key
+#### Story V1.2-E1-S2 — Domain-restrict the key
 
 - The MapTiler key is restricted in the MapTiler dashboard to the deployment
   origin(s) plus localhost for dev. *(Dashboard action; verified manually, not a
@@ -313,7 +393,7 @@ spec §17 Map UX.)
 
 ---
 
-### Epic V1.1-E2 — Hosting
+### Epic V1.2-E2 — Hosting
 
 **Goal / demo:** the built app loads at a public URL, with the SPA served
 correctly (deep links / refresh do not 404).
@@ -323,7 +403,7 @@ frontend; §18 backend, none in V1.)
 
 > Host decided: **Cloudflare Pages** (ADR-0010). E2 is unblocked.
 
-#### Story V1.1-E2-S1 — Build and deploy pipeline
+#### Story V1.2-E2-S1 — Build and deploy pipeline
 
 - The production build (`npm run build`) deploys to the chosen host on push to
   `master` (or a documented manual deploy command if CI deploy is deferred).
@@ -331,7 +411,7 @@ frontend; §18 backend, none in V1.)
 - The deploy step does not run before CI's `verify` job passes (existing
   branch-protection discipline is preserved).
 
-#### Story V1.1-E2-S2 — SPA serving and custom domain
+#### Story V1.2-E2-S2 — SPA serving and custom domain
 
 - Client-side routing / direct URL loads (e.g. a shared `?places=…` link opened
   cold) resolve to the app, not a host 404.
@@ -341,7 +421,7 @@ frontend; §18 backend, none in V1.)
 
 ---
 
-### Epic V1.1-E3 — Response headers
+### Epic V1.2-E3 — Response headers
 
 **Goal / demo:** the public site loads with no console/CSP violations and
 carries a minimal, correct set of security headers.
@@ -353,7 +433,7 @@ and is applied at the host layer.)
 needs (self, plus MapTiler's tile/style/font/worker origins), and two low-cost
 hardening headers. Nothing speculative.
 
-#### Story V1.1-E3-S1 — Content-Security-Policy
+#### Story V1.2-E3-S1 — Content-Security-Policy
 
 - A CSP is served (via the host's headers config) that allows the app's own
   assets and MapTiler's required origins for styles, tiles, fonts, and web
@@ -363,7 +443,7 @@ hardening headers. Nothing speculative.
 - The policy does not use `unsafe-eval`; any worker/blob needs of MapLibre are
   met with the narrowest directives that work.
 
-#### Story V1.1-E3-S2 — Baseline hardening headers
+#### Story V1.2-E3-S2 — Baseline hardening headers
 
 - `X-Content-Type-Options: nosniff` and `Referrer-Policy:
   strict-origin-when-cross-origin` are served.
@@ -372,7 +452,7 @@ hardening headers. Nothing speculative.
 
 ---
 
-### V1.1 Definition of Done
+### V1.2 Definition of Done
 
 The existing V1 app is reachable at a public URL, rendering production MapTiler
 tiles with real local-zoom detail; a cold-loaded shared link reconstructs its
@@ -381,47 +461,43 @@ headers. No product behaviour has changed. This milestone only makes V1 public.
 
 ---
 
-### Deferred to later point releases (explicitly NOT in V1.1)
+### Deferred to later point releases (explicitly NOT in V1.2)
 
 - **Coverage threshold gate** (per-directory vitest thresholds, glue excluded):
-  CI hygiene, independent of deployment; own point release (now V1.2).
-- **e2e / Playwright smoke test**: earns its place once flows exist only in the
-  assembled UI; defer until there is a live URL worth smoke-testing and a
-  reason.
+  CI hygiene, independent of deployment; own point release (now V1.3).
 - **Observability / error tracking (Sentry), analytics beyond host-provided**:
   attach to a backend or real traffic that do not yet exist.
 
 ---
 
-## V1.2 — Coverage gate (CI hardening)
+## V1.3 — Coverage gate (CI hardening)
 
 One epic. End state: CI fails when test coverage on the logic layer drops below
 a set threshold, so coverage regressions are caught automatically as the
 codebase grows.
 
-**Why a point release, sequenced after V1.1:** it is CI hygiene, independent of
+**Why a point release, sequenced after V1.2:** it is CI hygiene, independent of
 deployment and of any product feature; it does not block the public launch, but
 it is cheap and makes the repo demonstrably disciplined. Best done once the site
-is live (after V1.1) and before driving readers to the repo via the planned blog
+is live (after V1.2) and before driving readers to the repo via the planned blog
 post.
 
 **Scope discipline (YAGNI / INVEST):** gate the layer where logic and bugs
 actually live (`domain/`, `services/`); do NOT gate map/UI glue, which is
 integration-shaped and cannot be meaningfully unit-tested in jsdom without
-hollow tests. Do not chase 100%. No e2e here (that is a separate, later
-decision).
+hollow tests. Do not chase 100%. No e2e here (e2e is V1.1).
 
 ---
 
-### Epic V1.2-E1 — Coverage threshold in CI
+### Epic V1.3-E1 — Coverage threshold in CI
 
 **Goal / demo:** a deliberate drop in logic-layer coverage makes CI fail; normal
 passing code is unaffected.
 
 **Depends on:** nothing (operates on the existing test suite and CI).
-Independent of V1.1; may be done any time after it.
+Independent of V1.2; may be done any time after it.
 
-#### Story V1.2-E1-S1 — Configure coverage reporting
+#### Story V1.3-E1-S1 — Configure coverage reporting
 
 - `vitest` is configured to collect coverage (the V8 or istanbul provider) via
   `npm run test` (or a dedicated `test:coverage` script).
@@ -432,7 +508,7 @@ Independent of V1.1; may be done any time after it.
   that requires a live map/DOM to exercise). The exclusion list lives in config
   and is the documented record of "these need e2e, not unit tests."
 
-#### Story V1.2-E1-S2 — Enforce a logic-layer threshold
+#### Story V1.3-E1-S2 — Enforce a logic-layer threshold
 
 - A coverage threshold is enforced on the non-excluded layer (`src/domain/**`,
   `src/services/**`) such that CI fails below it.
@@ -447,12 +523,12 @@ Independent of V1.1; may be done any time after it.
 
 ---
 
-### V1.2 Definition of Done
+### V1.3 Definition of Done
 
 CI enforces a coverage threshold on the logic layer (`domain/`, `services/`),
 with map/UI glue explicitly excluded; a coverage regression in logic fails the
-build, and the exclusion list documents what is intentionally left to future
-e2e. No product behaviour changes.
+build, and the exclusion list documents what is intentionally left to e2e. No
+product behaviour changes.
 
 ---
 
