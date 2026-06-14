@@ -26,7 +26,7 @@ Host the V1 frontend on **Cloudflare Pages**: connect the repository, build with
 the existing `npm run build`, and serve the static `dist/` output from
 Cloudflare's CDN. SPA fallback is configured so cold-loaded deep links (e.g. a
 shared `?places=…` URL) resolve to the app rather than a host 404. Response
-headers / CSP (V1.1-E3) are applied via Pages' headers configuration. The custom
+headers / CSP (V1.2-E3) are applied via Pages' headers configuration. The custom
 domain `pinatlas.com` is pointed at the Pages project.
 
 The **backend host is explicitly left open** and is not decided here (see
@@ -74,7 +74,7 @@ Consequences).
   R2's no-egress pricing (the same property that motivated ADR-0009's spike
   resilience). Forgoing it to host the backend on Railway/AWS costs only a "two
   platforms" tax (notably CORS between origins), not a rewrite.
-- CSP (V1.1-E3) must permit the basemap provider's fetches (ADR-0009) and is set
+- CSP (V1.2-E3) must permit the basemap provider's fetches (ADR-0009) and is set
   in Pages' headers config; this is the one serving-layer detail the host choice
   introduces.
 - Deployment automation (build-on-push) is available but not required; a manual
