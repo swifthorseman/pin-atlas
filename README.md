@@ -26,7 +26,8 @@ architected to grow globally.
 
 ## Data
 
-Place data are derived from [GeoNames](https://www.geonames.org/), licensed under
+Place data are derived from [GeoNames](https://www.geonames.org/), licensed
+under
 [CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/). GeoNames is credited
 as the source; this project's code is MIT-licensed (see [LICENSE](LICENSE)).
 

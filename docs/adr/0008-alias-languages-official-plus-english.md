@@ -4,25 +4,32 @@
 - Date: 2026-06-13
 
 ## Context
+
 Curated places carry `displayName` and `searchAliases` in several languages so
-search can resolve a user's input whatever language they type. Spec §10 supports
+search can resolve a user's input whatever language they type. Spec §10
+supports
 the country's languages for the curated set (for Switzerland: English, German,
-French, Italian, Romansh) and additionally permits "best-effort" exonyms in other
+French, Italian, Romansh) and additionally permits "best-effort" exonyms in
+other
 languages, naming Spanish "Ginebra" for Geneva as the example, declared
 non-guaranteed. In practice that leaves the alias set unbounded: once Spanish
 Ginebra is in, there is no principled reason to exclude Romanian, Portuguese, or
-Mandarin forms, and curation has no stopping rule. A second, related question the
+Mandarin forms, and curation has no stopping rule. A second, related question
+the
 original wording left open is script: "official languages" taken literally would
 require native non-Latin forms (Cyrillic, Han, Arabic, Thai) for the countries
 that use them, which pulls in transliteration and input handling. The dataset
-currently holds exactly one stray exonym (`Ginebra`), an artifact of Geneva being
+currently holds exactly one stray exonym (`Ginebra`), an artifact of Geneva
+being
 the worked example during speccing.
 
 ## Decision
+
 Curated `displayName` and `searchAliases` are restricted to Latin-script names:
 the official languages of the place's country that are written in the Latin
 script, plus English. For Switzerland that is German, French, Italian, Romansh,
-and English. Accent- and punctuation-normalisation variants (for example "Murren"
+and English. Accent- and punctuation-normalisation variants (for example
+"Murren"
 for "Mürren", or "St Moritz" for "St. Moritz") remain allowed, as a matching aid
 rather than a language.
 
@@ -31,9 +38,11 @@ and so on), its native form is not carried; the English or romanised name is the
 entry for that place. Exonyms in languages that are not official for the country
 are not carried either (for example Spanish "Ginebra" for Geneva). Native
 non-Latin scripts, and the transliteration they require, are a separate and
-deliberate feature. This supersedes the best-effort-exonym allowance in spec §10.
+deliberate feature. This supersedes the best-effort-exonym allowance in spec
+§10.
 
 ## Alternatives considered
+
 - **Keep the spec §10 best-effort-exonym allowance.** Lets the dataset carry any
   exonym a curator happens to add (for example Spanish "Ginebra"). Familiar and
   low-effort, but it has no stopping rule: if Spanish is in, Romanian,
@@ -54,6 +63,7 @@ deliberate feature. This supersedes the best-effort-exonym allowance in spec §1
   V1's curated set; deferred to the same future feature.
 
 ## Consequences
+
 - Alias curation gets a clear stopping rule: a place's aliases are complete when
   the Latin-script official-language and English forms (plus accent and
   punctuation variants) are present. Coverage is now a decidable question.
