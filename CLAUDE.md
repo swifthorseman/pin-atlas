@@ -12,9 +12,9 @@ cantons, regions) is **derived** from pins, never entered manually.
 
 - `docs/spec.md` — what the product is and does (the source of truth for
   behaviour).
-- `docs/adr/` — why the technical decisions were made. Each ADR is immutable;
-  if a
-  decision changes, write a new ADR that supersedes it, do not edit the old one.
+- `docs/adr/` — why the technical decisions were made. Each ADR is immutable; if
+  a decision changes, write a new ADR that supersedes it, do not edit the old
+  one.
 - `docs/backlog.md` — the work breakdown (epics → stories → acceptance
   criteria).
 
@@ -23,12 +23,11 @@ cantons, regions) is **derived** from pins, never entered manually.
 1. **IDs are opaque. Never display names.** `ch:place:2660646`, never `zermatt`.
    Identity must not depend on spelling, accents, or language. (ADR-0002)
 2. **Coverage is derived, never stored or manually set.**
-   Countries/cantons/regions
-   are computed from pins/routes. No "mark country visited" feature. (ADR-0001)
+   Countries/cantons/regions are computed from pins/routes. No "mark country
+   visited" feature. (ADR-0001)
 3. **No display text in URL state — one exception.** The sole exception is a
    custom pin's label. A custom pin's **identity is its coordinate**; the label
-   is
-   personal annotation, never identity. (ADR-0005, ADR-0006)
+   is personal annotation, never identity. (ADR-0005, ADR-0006)
 4. **Switzerland is data, not the product boundary.** Never name anything
    `SwissMap`, `SwissSearch`, `CantonSelector`, etc. Use generic names:
    `MapView`, `PlaceSearch`, `Place`, `CoverageLayer`. (spec §14)
@@ -38,8 +37,7 @@ cantons, regions) is **derived** from pins, never entered manually.
    addable later without touching the data model or UI. (ADR-0005)
 6. **Coverage has two distinct mechanisms, not one.** Metadata (`countryCode`,
    `admin1`) for curated places in V1/V1.5; polygon containment later for
-   routes,
-   GPX, and custom pins. Do not conflate them. (ADR-0004)
+   routes, GPX, and custom pins. Do not conflate them. (ADR-0004)
 
 ## Stack
 
@@ -61,5 +59,4 @@ data. Never git-ignore them.
 - Prefer small, reviewable diffs. Explain what changed and which acceptance
   criteria it satisfies.
 - When something here conflicts with an instruction in chat, surface the
-  conflict
-  rather than silently choosing.
+  conflict rather than silently choosing.

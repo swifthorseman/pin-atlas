@@ -1,19 +1,17 @@
 # Pin Atlas — Backlog
 
-> **Status:** Living document. The work breakdown for delivery.
-> Companion to `spec.md` (what the product is) and `adr/` (why the technical
-> choices).
+> **Status:** Living document. The work breakdown for delivery. Companion to
+> `spec.md` (what the product is) and `adr/` (why the technical choices).
 >
-> **Structure:** Epic → Stories → Acceptance Criteria.
-> An **epic** is one demonstrable capability ("a user can now do X").
-> A **story** is a user-facing slice inside it.
-> Acceptance criteria are the check that the story is done.
+> **Structure:** Epic → Stories → Acceptance Criteria. An **epic** is one
+> demonstrable capability ("a user can now do X"). A **story** is a user-facing
+> slice inside it. Acceptance criteria are the check that the story is done.
 >
 > **Working method:** take one epic per session. At the start of the session,
 > point Claude Code at `spec.md`, the relevant ADRs, and the root `CLAUDE.md`.
 > Implement story by story, verify each against its acceptance criteria, commit,
-> then move on. Do not pull later-phase work into a V1 epic — the phasing is
-> the point.
+> then move on. Do not pull later-phase work into a V1 epic — the phasing is the
+> point.
 >
 > **Epic dependency order is strict:** each epic depends only on those before
 > it, and each leaves the app in a working, committable state. You can stop
@@ -218,8 +216,8 @@ below).
 **Goal / demo:** the V1 acceptance behaviours are protected by automated tests.
 
 **Note:** can be folded into E2/E4/E6 as you go (test-alongside) rather than run
-as a trailing epic. Listed separately so the coverage is not forgotten.
-(Spec §19.)
+as a trailing epic. Listed separately so the coverage is not forgotten. (Spec
+§19.)
 
 #### Story V1-E7-S1 — URL state tests ✅
 
@@ -248,14 +246,14 @@ as a trailing epic. Listed separately so the coverage is not forgotten.
 
 ### V1 refinement — Alias language policy ✅
 
-Curated aliases restricted to the country's official Latin-script languages
-plus English; non-Latin native scripts and broader exonyms are a separate,
-deliberate feature. (ADR-0008.)
+Curated aliases restricted to the country's official Latin-script languages plus
+English; non-Latin native scripts and broader exonyms are a separate, deliberate
+feature. (ADR-0008.)
 
 - ADR-0008 records the decision and supersedes the spec §10 best-effort-exonym
   stance.
-- `spec.md` §10 amended (and the §13/§19 exonym references);
-  best-effort-exonym allowance removed.
+- `spec.md` §10 amended (and the §13/§19 exonym references); best-effort-exonym
+  allowance removed.
 - Curated dataset audited; `Ginebra` removed from Geneva (the lone
   non-official-language alias).
 - Search guard: `Ginebra` no longer resolves to Geneva.
@@ -266,8 +264,8 @@ deliberate feature. (ADR-0008.)
 
 Three epics. End state: a real public URL renders the app with a production
 basemap, served over a configured host with sensible response headers. This
-realises the product's core differentiator (a shareable URL, no account;
-spec §1), which is theoretical until the app is actually public.
+realises the product's core differentiator (a shareable URL, no account; spec
+§1), which is theoretical until the app is actually public.
 
 **Why before V1.5:** the shareable-URL property is the wedge; deploying makes it
 real, and the planned blog post needs a live link. Coverage views (V1.5)
@@ -320,8 +318,8 @@ spec §17 Map UX.)
 **Goal / demo:** the built app loads at a public URL, with the SPA served
 correctly (deep links / refresh do not 404).
 
-**Depends on:** ADR-0010 (hosting: Cloudflare Pages, accepted).
-(spec §14 frontend; §18 backend, none in V1.)
+**Depends on:** ADR-0010 (hosting: Cloudflare Pages, accepted). (spec §14
+frontend; §18 backend, none in V1.)
 
 > Host decided: **Cloudflare Pages** (ADR-0010). E2 is unblocked.
 
@@ -401,9 +399,8 @@ Adds visible coverage at low zoom without changing the input model. Still
 metadata-based (ADR-0004). Stories to be detailed when V1 lands.
 
 - **V1.5-E1 — Canton derivation:** derive Swiss cantons from selected places via
-  `admin1`.
-  Tests (deferred here from V1-E7-S3): pin in Zermatt → Valais; pin in Mürren →
-  Bern.
+  `admin1`. Tests (deferred here from V1-E7-S3): pin in Zermatt → Valais; pin in
+  Mürren → Bern.
 - **V1.5-E2 — Coverage summary UI:** "N countries represented", "X/26 cantons
   represented".
 - **V1.5-E3 — Country colouring at low zoom:** colour visited countries when

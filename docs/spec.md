@@ -1,26 +1,26 @@
 # Pin Atlas — Product Specification
 
-> **Status:** Living document. Describes what the product is and does.
-> Rationale for hard-to-reverse technical decisions lives in `docs/adr/`.
-> Product name: **Pin Atlas**. Repository: `pin-atlas`.
+> **Status:** Living document. Describes what the product is and does. Rationale
+> for hard-to-reverse technical decisions lives in `docs/adr/`. Product name:
+> **Pin Atlas**. Repository: `pin-atlas`.
 
 ---
 
 ## 1. Product Vision
 
-Build a personal travel atlas: a shareable, multi-scale map of places
-visited and routes travelled.
+Build a personal travel atlas: a shareable, multi-scale map of places visited
+and routes travelled.
 
 The product starts simple, but the long-term vision is global:
 
 - A world map zoomed out, with visited countries visually indicated.
 - Zooming into a country reveals the exact places visited.
 - Zooming further reveals individual pins, route lines, and local detail.
-- Routes can represent hikes, skating routes, rail journeys, road trips,
-  ferry journeys, cycling routes, or uploaded GPS tracks.
+- Routes can represent hikes, skating routes, rail journeys, road trips, ferry
+  journeys, cycling routes, or uploaded GPS tracks.
 
-The product is not primarily a "visited countries checklist". It is a
-map-based record of travel history.
+The product is not primarily a "visited countries checklist". It is a map-based
+record of travel history.
 
 The key concept:
 
@@ -32,22 +32,21 @@ Examples:
 
 - If the user pins Zermatt, Switzerland becomes visited and Valais becomes
   represented.
-- If the user pins Nice, France becomes visited and Provence-Alpes-Côte
-  d'Azur becomes represented.
+- If the user pins Nice, France becomes visited and Provence-Alpes-Côte d'Azur
+  becomes represented.
 - If the user pins Yangon, Myanmar becomes visited.
-- If the user adds a route from Männlichen to Kleine Scheidegg, Switzerland
-  and the relevant Swiss canton/region can be derived from that route.
+- If the user adds a route from Männlichen to Kleine Scheidegg, Switzerland and
+  the relevant Swiss canton/region can be derived from that route.
 
 The initial dataset is Switzerland, but the architecture is global from the
 start. See ADR-0001 (pins as source of truth).
 
 ### Differentiator
 
-Pin Atlas is a **web app whose primary artifact is a shareable URL** — a map
-you can hand to anyone with no account and no sign-up. This is the deliberate
-wedge against the crowded field of account-based, social, mobile-native
-"travel map" apps. URL-shareable-without-accounts is the property to protect.
-See ADR-0005.
+Pin Atlas is a **web app whose primary artifact is a shareable URL** — a map you
+can hand to anyone with no account and no sign-up. This is the deliberate wedge
+against the crowded field of account-based, social, mobile-native "travel map"
+apps. URL-shareable-without-accounts is the property to protect. See ADR-0005.
 
 ---
 
@@ -55,8 +54,8 @@ See ADR-0005.
 
 1. Places and routes are the source of truth.
 2. Countries, cantons, states, provinces, and other regions are derived views.
-3. The user does not manually mark countries or regions as visited in the
-   core workflow.
+3. The user does not manually mark countries or regions as visited in the core
+   workflow.
 4. Small shareable state lives in the URL.
 5. Large state, such as uploaded GPX geometry, is stored separately and
    referenced by ID.
@@ -79,8 +78,7 @@ See ADR-0005.
 A place is a named point with coordinates.
 
 Examples: Bern, Interlaken, Zermatt, Mürren, Gimmelwald, Allmendhubel, Kleine
-Scheidegg, Klein Matterhorn, Nice, Monaco, Èze, Menton, Yangon, Bagan,
-Mandalay.
+Scheidegg, Klein Matterhorn, Nice, Monaco, Èze, Menton, Yangon, Bagan, Mandalay.
 
 The app does not force the user to care whether a place is a city, town,
 village, hamlet, mountain station, viewpoint, landmark, or resort.
@@ -94,22 +92,21 @@ There are two kinds of place:
 - **Curated place** — a durable, hand-authored entry in the dataset, with a
   stable opaque ID, shared identically by all users. Cities, towns, mountain
   stations, scenic landmarks. See ADR-0002.
-- **Custom pin** — a user-dropped coordinate that is *not* in the dataset,
-  with an optional user label. Identity is the coordinate; the label is
-  personal annotation, not identity. Restaurants, hotels, a friend's house,
-  an unnamed viewpoint. See ADR-0006.
+- **Custom pin** — a user-dropped coordinate that is *not* in the dataset, with
+  an optional user label. Identity is the coordinate; the label is personal
+  annotation, not identity. Restaurants, hotels, a friend's house, an unnamed
+  viewpoint. See ADR-0006.
 
-The dividing line: a place earns a curated ID if it is **durable and
-plausibly meaningful to many users as the same entity**. Everything else is a
-custom pin.
+The dividing line: a place earns a curated ID if it is **durable and plausibly
+meaningful to many users as the same entity**. Everything else is a custom pin.
 
 ### Route
 
 A route is a named or user-uploaded line/path.
 
-Examples: Männlichen → Kleine Scheidegg hike; Glacier Express (Zermatt →
-Chur); SlowUp route; skating route around Basel; Nice → Monaco day trip; a
-GPX track exported from Strava, Garmin, or Komoot.
+Examples: Männlichen → Kleine Scheidegg hike; Glacier Express (Zermatt → Chur);
+SlowUp route; skating route around Basel; Nice → Monaco day trip; a GPX track
+exported from Strava, Garmin, or Komoot.
 
 Routes are V2+.
 
@@ -163,8 +160,8 @@ A user can search for places, add pins, and share the resulting map by URL.
 
 ### V1 Features
 
-- Display a world map (initial viewport clipped to the available dataset —
-  see §17 and ADR-0007).
+- Display a world map (initial viewport clipped to the available dataset — see
+  §17 and ADR-0007).
 - Search for places.
 - Add/remove selected places.
 - Show selected places as pins.
@@ -180,8 +177,7 @@ A user can search for places, add pins, and share the resulting map by URL.
 ### V1 Initial Dataset
 
 Switzerland is the first curated dataset. This does not make the app
-Switzerland-specific; the code is a global app with one initial country
-dataset.
+Switzerland-specific; the code is a global app with one initial country dataset.
 
 ### V1 Example URL
 
@@ -192,8 +188,8 @@ Stable opaque IDs only:
 ```
 
 Do **not** use display names or slugs as production state
-(`/?places=zermatt,murren,gimmelwald` is readable but wrong — identity must
-not be tied to spelling or language).
+(`/?places=zermatt,murren,gimmelwald` is readable but wrong — identity must not
+be tied to spelling or language).
 
 ### V1 Acceptance Criteria
 
@@ -206,8 +202,8 @@ not be tied to spelling or language).
 - Unknown place IDs in the URL are ignored gracefully.
 - Duplicate place IDs are deduplicated.
 - Map can fit to selected pins.
-- Countries containing selected pins can be derived internally, even if
-  country colouring is not fully implemented yet.
+- Countries containing selected pins can be derived internally, even if country
+  colouring is not fully implemented yet.
 
 ---
 
@@ -217,8 +213,8 @@ Adds derived coverage views without changing the core user input model.
 
 ### Goal
 
-Show aggregate coverage at low zoom levels while keeping pins as the source
-of truth.
+Show aggregate coverage at low zoom levels while keeping pins as the source of
+truth.
 
 ### Features
 
@@ -226,20 +222,20 @@ of truth.
 - Optionally colour visited countries when zoomed out.
 - Derive administrative coverage for supported countries (cantons for
   Switzerland).
-- Show a coverage summary (e.g. "5 countries represented", "8/26 Swiss
-  cantons represented").
+- Show a coverage summary (e.g. "5 countries represented", "8/26 Swiss cantons
+  represented").
 - At higher zoom, show pins instead of only aggregate coverage.
 
 ### Mechanism
 
-V1/V1.5 coverage uses **metadata on curated places** (`countryCode`,
-`admin1`). Polygon containment is a separate mechanism introduced later for
-routes, GPX, and custom pins — not an upgrade of the same path. See ADR-0004.
+V1/V1.5 coverage uses **metadata on curated places** (`countryCode`, `admin1`).
+Polygon containment is a separate mechanism introduced later for routes, GPX,
+and custom pins — not an upgrade of the same path. See ADR-0004.
 
 ### Important Rule
 
-The user still adds pins. The user does not manually select countries,
-cantons, regions, or states.
+The user still adds pins. The user does not manually select countries, cantons,
+regions, or states.
 
 ### Acceptance Criteria
 
@@ -250,9 +246,8 @@ cantons, regions, or states.
 - Coverage remains derived, not manually selected.
 - Visual highlighting can be toggled or introduced after the calculation is
   proven.
-- Edge cases covered by tests: small islands, enclaves, and
-  disputed/ambiguous territories (these are where containment logic breaks
-  first).
+- Edge cases covered by tests: small islands, enclaves, and disputed/ambiguous
+  territories (these are where containment logic breaks first).
 
 ---
 
@@ -262,8 +257,8 @@ Adds predefined, shareable routes.
 
 ### Route Types (optional metadata)
 
-hike, rail, skate, cycle, walk, road, ferry, scenic, other. The product does
-not depend heavily on route categories early.
+hike, rail, skate, cycle, walk, road, ferry, scenic, other. The product does not
+depend heavily on route categories early.
 
 ### URL Example
 
@@ -284,8 +279,8 @@ not depend heavily on route categories early.
 
 ## 8. V3 Scope — GPX Upload
 
-Adds uploaded GPS routes (Strava, Garmin, Komoot, Apple Fitness exports,
-other GPX tools).
+Adds uploaded GPS routes (Strava, Garmin, Komoot, Apple Fitness exports, other
+GPX tools).
 
 ### Important Distinction
 
@@ -293,16 +288,15 @@ Small state goes in the URL. Large geometry does not.
 
 ### GPX Modes
 
-- **Option A — Local-only display:** parse and display locally, no sharing,
-  no backend. Simplest first implementation.
-- **Option B — Shareable uploaded routes:** backend stores simplified
-  geometry, returns a route ID; shared URL references it.
+- **Option A — Local-only display:** parse and display locally, no sharing, no
+  backend. Simplest first implementation.
+- **Option B — Shareable uploaded routes:** backend stores simplified geometry,
+  returns a route ID; shared URL references it.
   `/?places=ch:place:2660646&uploadedRoutes=rt_abc123`
 - **Option C — Account-based library:** rename/delete/group/reuse routes,
   public/private. Not required early.
 
-GPX upload starts local-only (Option A) before shareable storage. See
-§22.
+GPX upload starts local-only (Option A) before shareable storage. See §22.
 
 ### Acceptance Criteria
 
@@ -319,8 +313,8 @@ Trips are optional groupings of places and routes.
 
 ### Trip Model
 
-A trip can contain: place IDs, route IDs, uploaded route IDs, date range,
-notes, optional display colour/label.
+A trip can contain: place IDs, route IDs, uploaded route IDs, date range, notes,
+optional display colour/label.
 
 ```json
 {
@@ -333,8 +327,8 @@ notes, optional display colour/label.
 }
 ```
 
-Trips are not required for V1. Dates and notes are deferred to this phase,
-not carried in V1 URL state. See ADR-0005.
+Trips are not required for V1. Dates and notes are deferred to this phase, not
+carried in V1 URL state. See ADR-0005.
 
 ---
 
@@ -361,8 +355,8 @@ Wikidata as an optional cross-reference. See ADR-0002.
 
 URLs contain stable IDs only. URL state does not depend on language, accents,
 spelling, or display name. The one deliberate exception is custom-pin labels
-(free text), which annotate identity rather than constituting it. See
-ADR-0005, ADR-0006.
+(free text), which annotate identity rather than constituting it. See ADR-0005,
+ADR-0006.
 
 ### Display Names
 
@@ -390,13 +384,12 @@ Presentation/search support; resolve user input to stable IDs:
 
 Curated names are Latin-script only: the official languages of the place's
 country that use the Latin script, plus English (with accent- and
-punctuation-normalisation variants). For Switzerland: German, French,
-Italian, Romansh, and English. Where an official language uses a non-Latin
-script (Cyrillic, Han, Arabic, Thai, etc.), the native form is not carried,
-and the English or romanised name serves instead. Exonyms in non-official
-languages (e.g. Spanish "Ginebra" for Geneva) are not carried. Native
-non-Latin scripts and transliteration are a separate, deliberate feature. See
-ADR-0008.
+punctuation-normalisation variants). For Switzerland: German, French, Italian,
+Romansh, and English. Where an official language uses a non-Latin script
+(Cyrillic, Han, Arabic, Thai, etc.), the native form is not carried, and the
+English or romanised name serves instead. Exonyms in non-official languages
+(e.g. Spanish "Ginebra" for Geneva) are not carried. Native non-Latin scripts
+and transliteration are a separate, deliberate feature. See ADR-0008.
 
 ### Swiss Naming Issues Stable IDs Solve
 
@@ -468,9 +461,9 @@ export interface MapState {
 ```
 
 No country is selected globally in state; countries are derived from selected
-places/routes. The application consumes a `MapState` regardless of where it
-came from (URL today; stored map / short link / user account later).
-State-source must be swappable without touching the data model. See ADR-0005.
+places/routes. The application consumes a `MapState` regardless of where it came
+from (URL today; stored map / short link / user account later). State-source
+must be swappable without touching the data model. See ADR-0005.
 
 ---
 
@@ -483,15 +476,15 @@ The URL is shareable application state.
 - Deduplicate IDs.
 - Ignore unknown IDs gracefully.
 - Avoid storing large geometry directly in the URL.
-- Avoid using display names as state (custom-pin labels are the sole,
-  deliberate exception).
+- Avoid using display names as state (custom-pin labels are the sole, deliberate
+  exception).
 - Keep the URL reasonably compact.
 - Custom-pin labels are free text: URL-encode them, enforce a length cap, and
-  ensure separator characters (`,` `;`) inside labels are encoded so they
-  cannot break parsing.
-- When URLs become too long — custom pins with labels are the first feature
-  to push this — migrate to stored maps + short links rather than growing the
-  query string. See ADR-0005.
+  ensure separator characters (`,` `;`) inside labels are encoded so they cannot
+  break parsing.
+- When URLs become too long — custom pins with labels are the first feature to
+  push this — migrate to stored maps + short links rather than growing the query
+  string. See ADR-0005.
 
 Examples:
 
@@ -579,8 +572,8 @@ Switzerland is data/configuration, not the product boundary. Do **not** name
 components `SwissMap`, `SwissSearch`, `SwissPlace`, `CantonSelector`. Prefer
 generic names: `MapView`, `PlaceSearch`, `Place`, `CoverageLayer`.
 
-> **Note on curated data files:** the country JSON datasets are committed
-> source data, not build artifacts. They must never be git-ignored.
+> **Note on curated data files:** the country JSON datasets are committed source
+> data, not build artifacts. They must never be git-ignored.
 
 ---
 
@@ -589,17 +582,17 @@ generic names: `MapView`, `PlaceSearch`, `Place`, `CoverageLayer`.
 ### V1
 
 Use curated static place datasets: better quality, predictable search, easier
-aliases, less noise, faster MVP. For Switzerland include major cities,
-tourist towns, mountain villages, railway destinations, scenic places —
-places likely to matter to travellers.
+aliases, less noise, faster MVP. For Switzerland include major cities, tourist
+towns, mountain villages, railway destinations, scenic places — places likely to
+matter to travellers.
 
 ### Later
 
 Consider integrating external sources: OpenStreetMap/Nominatim, GeoNames,
 Wikidata, Natural Earth (country boundaries), official regional boundary
-datasets. Do not rely blindly on open search early — OSM returns shops,
-hotels, bus stops, and duplicates unless filtered carefully. OSM IDs are not
-used as canonical identity (they are not stable); see ADR-0002.
+datasets. Do not rely blindly on open search early — OSM returns shops, hotels,
+bus stops, and duplicates unless filtered carefully. OSM IDs are not used as
+canonical identity (they are not stable); see ADR-0002.
 
 ---
 
@@ -614,16 +607,16 @@ least one selected/uploaded route passes through it.
 
 ### Region Coverage
 
-A region is represented if at least one selected place is inside it, or at
-least one selected/uploaded route intersects it.
+A region is represented if at least one selected place is inside it, or at least
+one selected/uploaded route intersects it.
 
 ### Two distinct mechanisms (see ADR-0004)
 
 - **Metadata-based** (V1/V1.5): each curated place stores `countryCode` and
   `admin1`. Simple. Works only for curated places.
-- **Polygon-based** (V2/V3): boundary polygons compute
-  containment/intersection. Required for routes, GPX, and custom pins (which
-  carry no admin metadata). Better for global scale.
+- **Polygon-based** (V2/V3): boundary polygons compute containment/intersection.
+  Required for routes, GPX, and custom pins (which carry no admin metadata).
+  Better for global scale.
 
 Progression: V1 uses `countryCode` metadata; V1.5 uses `admin1` for Swiss
 cantons; V2/V3 introduces polygon intersection.
@@ -634,30 +627,28 @@ cantons; V2/V3 introduces polygon intersection.
 
 ### Initial View
 
-The default product opens clipped to the available dataset's bounds
-(Switzerland initially), not as an empty world map with no coverage
-elsewhere. This is clearer than inviting the user to pan into empty regions.
-See ADR-0007. If selected pins exist, the map can fit to selected data. The
-basemap tiles are served by a hosted vector provider (MapTiler); see
-ADR-0009.
+The default product opens clipped to the available dataset's bounds (Switzerland
+initially), not as an empty world map with no coverage elsewhere. This is
+clearer than inviting the user to pan into empty regions. See ADR-0007. If
+selected pins exist, the map can fit to selected data. The basemap tiles are
+served by a hosted vector provider (MapTiler); see ADR-0009.
 
 ### Controls
 
 V1: search bar, selected-places list, remove selected place, copy/share URL,
-clear all, fit to selected.
-Later: add route, upload GPX, toggle pins/routes/coverage, filter by
-trip/year/type, timeline slider.
+clear all, fit to selected. Later: add route, upload GPX, toggle
+pins/routes/coverage, filter by trip/year/type, timeline slider.
 
 ### Pin Behaviour
 
 Clicking a pin shows name and context; pins cluster when zoomed out; labels
-appear at suitable zoom; pins remain the most concrete representation of
-visited places.
+appear at suitable zoom; pins remain the most concrete representation of visited
+places.
 
 ### Coverage Behaviour
 
-Country/region colouring is a derived summary — visually secondary to pins
-when zoomed in, more prominent when zoomed out.
+Country/region colouring is a derived summary — visually secondary to pins when
+zoomed in, more prominent when zoomed out.
 
 ---
 
@@ -666,10 +657,10 @@ when zoomed in, more prominent when zoomed out.
 No backend in V1. The static V1 frontend is hosted on Cloudflare Pages
 (ADR-0010); the backend host is a separate decision deferred with the backend
 itself. A backend becomes useful for: uploaded GPX storage, short links, user
-accounts, saved maps, trip libraries, photo attachments. Likely
-Node/TypeScript when introduced (single language across the stack), but that,
-and where it runs (Cloudflare Workers, Railway, AWS, or elsewhere), is an open
-decision deferred until V3. See ADR-0005 and ADR-0010.
+accounts, saved maps, trip libraries, photo attachments. Likely Node/TypeScript
+when introduced (single language across the stack), but that, and where it runs
+(Cloudflare Workers, Railway, AWS, or elsewhere), is an open decision deferred
+until V3. See ADR-0005 and ADR-0010.
 
 ### Later Backend Entities (sketch)
 
@@ -755,17 +746,17 @@ Trip           id, userId, name, placeIds, routeIds, uploadedRouteIds, dateFrom,
 Product name: **Pin Atlas**. Repository: `pin-atlas`.
 
 The project must not be named as if it is Switzerland-only (avoid
-`swiss-travel-map`, `swiss-pins`, etc.). "Pin Atlas" pairs the input (pin)
-with the output (atlas) and is distinct from the crowded "pin map / visited
-countries" field. Keep "Pin" and "Atlas" together as one mark; do not shorten
-to "Atlas" alone.
+`swiss-travel-map`, `swiss-pins`, etc.). "Pin Atlas" pairs the input (pin) with
+the output (atlas) and is distinct from the crowded "pin map / visited
+countries" field. Keep "Pin" and "Atlas" together as one mark; do not shorten to
+"Atlas" alone.
 
 ---
 
 ## 22. Decisions Record
 
-All previously open questions are now settled. Rationale for the
-hard-to-reverse ones is in `docs/adr/`.
+All previously open questions are now settled. Rationale for the hard-to-reverse
+ones is in `docs/adr/`.
 
 1. **Public product name** → Pin Atlas. (§21)
 2. **Map engine** → MapLibre GL. (ADR-0003)
@@ -775,9 +766,9 @@ hard-to-reverse ones is in `docs/adr/`.
    places (cities, tourist towns, mountain villages, railway/scenic
    destinations); exact count an implementation detail. (§15)
 5. **Custom pins allowed?** → Yes. (ADR-0006)
-6. **Custom pin encoding** → coordinate + optional label carried in the URL;
-   no canonical ID; migrate to stored state when URLs grow too long.
-   (ADR-0005, ADR-0006)
+6. **Custom pin encoding** → coordinate + optional label carried in the URL; no
+   canonical ID; migrate to stored state when URLs grow too long. (ADR-0005,
+   ADR-0006)
 7. **Dates/notes** → deferred to trips/accounts; not in V1 URL state. (§9,
    ADR-0005)
 8. **GPX upload** → starts local-only before shareable storage. (§8)
@@ -786,8 +777,8 @@ hard-to-reverse ones is in `docs/adr/`.
     (`countryCodes` is plural). (§11, §16)
 11. **Canonical ID source** → internal IDs, GeoNames-mirrored where possible,
     Wikidata as optional cross-reference. (ADR-0002)
-12. **Basemap provider** → MapTiler free tier for V1, with a documented
-    upgrade path (paid tier if commercial; self-hosted Protomaps only if
-    traffic economics demand). (ADR-0009)
+12. **Basemap provider** → MapTiler free tier for V1, with a documented upgrade
+    path (paid tier if commercial; self-hosted Protomaps only if traffic
+    economics demand). (ADR-0009)
 13. **Frontend hosting** → Cloudflare Pages for the static V1 frontend; the
     backend host is left as a separate, later decision. (ADR-0010)
