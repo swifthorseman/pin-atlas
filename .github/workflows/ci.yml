@@ -40,6 +40,10 @@ jobs:
       - name: Lint
         run: npm run lint
 
+      # Lint markdown (docs, ADRs, README) via markdownlint-cli2.
+      - name: Lint markdown
+        run: npm run lint:md
+
       # Production build must succeed.
       - name: Build
         run: npm run build
